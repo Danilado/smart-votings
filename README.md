@@ -10,3 +10,8 @@
 7) python3 manage.py makemigrations
 8) python3 manage.py migrate
 9) python3 manage.py runserver
+
+Как убрать ошибки импорта в Pycharm:
+1) Нажимаете правой кнопкой мыши на папку где хранится manage.py
+2) Нажимаете на Mark Directory as -> Sources Root
+![пример](https://i.imgur.com/pCxUHzd.jpeg)
