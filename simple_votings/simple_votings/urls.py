@@ -19,7 +19,7 @@ from django.urls import path, include
 from user_profile.views import *
 
 urlpatterns = [
-    path("auth/", include('django.contrib.auth.urls')),
-    path("accounts/profile", get_user_profile),
-    path('admin/', admin.site.urls)
+    path("admin/", admin.site.urls),
+    path("auth/", include('user_profile.urls')),
+    path("accounts/profile", get_user_profile_page),
 ]
