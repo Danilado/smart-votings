@@ -22,4 +22,5 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("auth/", include('user_profile.urls')),
     path("accounts/profile", get_user_profile_page),
+    path("description/", description_vote),
 ]
