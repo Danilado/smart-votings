@@ -8,6 +8,8 @@ from django.http import HttpRequest, HttpResponseRedirect, QueryDict
 from django.shortcuts import render
 from django.utils.translation import gettext
 
+from user_profile.models import Vote
+
 
 @login_required
 def get_user_profile_page(request: HttpRequest):
@@ -69,3 +71,11 @@ def register_user(request: HttpRequest):
             return HttpResponseRedirect('/auth/login')
     register_page_render = render(request, "registration/register.html", context=context)
     return register_page_render
+
+def description_vote(request):
+    all_data = Vote.objects.all()
+    id = 1
+    context = {}
+    context['data'] = all_data
+    context['id'] = id
+    return render(request, "description_vote.html", context)
