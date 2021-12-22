@@ -1,48 +1,41 @@
 {% extends "../base.html" %}
 
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Вход</title>
-  </head>
-  <body>
-    {% block content %}
-    <h3>Авторизация</h3>
+{% block content %}
+<h3>Авторизация</h3>
 
-    {% if form.errors %}
-    <p>Имя пользователя или пароль введены неверно. Попробуйте снова.</p>
-    {% endif %} {% if next %} {% if user.is_authenticated %}
-    <p>
-      У вашего вас нет доступа к этой страницу. Чтобы продолжить, пожалуйста,
-      войдите в аккаунт, который имеет к ней доступ.
-    </p>
-    {% else %}
-    <p>Пожалуйста, войдите в аккаунт, чтобы увидель эту страницу.</p>
-    {% endif %} {% endif %}
+{% if form.errors %}
+  <p>Your username and password didn't match. Please try again.</p>
+{% endif %}
 
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      <table>
-        <tr>
-          <td>{{ form.username.label_tag }}</td>
-          <td>{{ form.username }}</td>
-        </tr>
+{% if next %}
+  {% if user.is_authenticated %}
+    <p>Your account doesn't have access to this page. To proceed,
+    please login with an account that has access.</p>
+  {% else %}
+    <p>Please login to see this page.</p>
+  {% endif %}
+{% endif %}
 
-        <tr>
-          <td>{{ form.password.label_tag }}</td>
-          <td>{{ form.password }}</td>
-        </tr>
-      </table>
+<form method="post" action="{% url 'login' %}">
+{% csrf_token %}
+<table>
 
-      <input type="submit" value="login" />
-      <input type="hidden" name="next" value="{{ next }}" />
-    </form>
+<tr>
+  <td>{{ form.username.label_tag }}</td>
+  <td>{{ form.username }}</td>
+</tr>
 
-    <p><a href="/auth/register">Нет аккаунта?</a></p>
-  </body>
-</html>
+<tr>
+  <td>{{ form.password.label_tag }}</td>
+  <td>{{ form.password }}</td>
+</tr>
+</table>
+
+<input type="submit" value="login" />
+<input type="hidden" name="next" value="{{ next }}" />
+</form>
+
+<p><a href="/auth/register">Not with us?</a></p>
+<p><a href="{% url 'password_reset' %}">Lost password?</a></p>
 
 {% endblock %}
