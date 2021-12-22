@@ -15,6 +15,9 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from django.contrib.staticfiles.urls import staticfiles_urlpatterns
+from django.conf.urls.static import static
+from simple_votings import settings
 
 from user_profile.views import *
 
@@ -23,3 +26,5 @@ urlpatterns = [
     path("auth/", include('user_profile.urls')),
     path("accounts/profile", get_user_profile_page),
 ]
+
+urlpatterns += staticfiles_urlpatterns()

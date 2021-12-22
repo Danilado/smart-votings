@@ -1,36 +1,49 @@
-{% extends "../base.html" %}
+{% extends "../base.html" %} {% load static %} {% block content %}
 
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" href="{% static 'register/style.css' %}" />
+    <title>Регистрация</title>
+  </head>
+  <body>
+    <section class="regCont">
+      <h1>Регистрация</h1>
 
-<h3>Регистрация</h3>
+      <form method="post" action="/auth/register">
+        {% csrf_token %}
+        <table>
+          <tr>
+            <td>{{ form.username.label_tag }}</td>
+            <td>{{ form.username }}</td>
+          </tr>
 
-<form method="post" action="/auth/register">
-{% csrf_token %}
-<table>
+          <tr>
+            <td>{{ form.password.label_tag }}</td>
+            <td>{{ form.password }}</td>
+          </tr>
 
-<tr>
-  <td>{{ form.username.label_tag }}</td>
-  <td>{{ form.username }}</td>
-</tr>
+          <tr>
+            <td>{{ form.email.label_tag }}</td>
+            <td>{{ form.email }}</td>
+          </tr>
+        </table>
 
-<tr>
-  <td>{{ form.password.label_tag }}</td>
-  <td>{{ form.password }}</td>
-</tr>
+        <input type="submit" value="Register" class="bt" />
+      </form>
 
-<tr>
-  <td>{{ form.email.label_tag }}</td>
-  <td>{{ form.email }}</td>
-</tr>
-</table>
+      {# Assumes you setup the password_reset view in your URLconf #}
+      <p><a href="/auth/login">Уже есть аккаунт?</a></p>
 
-<input type="submit" value="Register" />
-</form>
-
-{# Assumes you setup the password_reset view in your URLconf #}
-<p><a href="/auth/login">Already have account?</a></p>
-
-<p>Errors: </p>
-<p>{{ form.errors }}</p>
-
+      <!-- <p>Ошибки:</p>
+      <p>{{ form.errors }}</p> -->
+    </section>
+    <script src="{% static 'modules/anime.js' %}"></script>
+    <script src="{% static 'modules/triggers.js' %}"></script>
+    <script src="{% static 'register/main.js' %}"></script>
+  </body>
+</html>
 {% endblock %}
