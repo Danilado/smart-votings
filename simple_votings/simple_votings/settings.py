@@ -124,3 +124,10 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Настройки аутентификации
 LOGIN_REDIRECT_URL = "/accounts/profile"
+
+# Настройки почты
+EMAIL_USE_TLS = True
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'quswadress@gmail.com'
+EMAIL_HOST_PASSWORD = 'nbfmasuinjxbhwyx'
