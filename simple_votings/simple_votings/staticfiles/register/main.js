@@ -73,16 +73,18 @@ function validate() {
   bigflag = 1;
 }
 
-document.title = "Регистрация";
-
-labels.forEach((node) => {
-  node.innerHTML = node.innerHTML
-    .replace(/Username/, "Имя пользователя")
-    .replace(/Password/, "Пароль");
-});
-
 for (i = 0; i < inputs.length - 1; ++i) {
   inputs[i].addEventListener("input", validate);
 }
 
-submit.value = submit.value.replace(/Register/, "Зарегистрироваться");
+validate();
+
+// document.title = "Регистрация";
+
+// labels.forEach((node) => {
+//   node.innerHTML = node.innerHTML
+//     .replace(/Username/, "Имя пользователя")
+//     .replace(/Password/, "Пароль");
+// });
+
+// submit.value = submit.value.replace(/Register/, "Зарегистрироваться");

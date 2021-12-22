@@ -1,15 +1,15 @@
-{% extends "../base.html" %} {% load static %} {% block content %}
+{% extends "../base.html" %} {% load static %}
 
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    {% block head %}
     <link rel="stylesheet" href="{% static 'register/style.css' %}" />
     <title>Регистрация</title>
+    {% endblock %}
   </head>
   <body>
+    {% block content %}
     <section class="regCont">
       <h1>Регистрация</h1>
 
@@ -17,17 +17,17 @@
         {% csrf_token %}
         <table>
           <tr>
-            <td>{{ form.username.label_tag }}</td>
+            <td>Имя пользователя</td>
             <td>{{ form.username }}</td>
           </tr>
 
           <tr>
-            <td>{{ form.password.label_tag }}</td>
+            <td>Пароль</td>
             <td>{{ form.password }}</td>
           </tr>
 
           <tr>
-            <td>{{ form.email.label_tag }}</td>
+            <td>Email</td>
             <td>{{ form.email }}</td>
           </tr>
         </table>
@@ -37,13 +37,10 @@
 
       {# Assumes you setup the password_reset view in your URLconf #}
       <p><a href="/auth/login">Уже есть аккаунт?</a></p>
-
-      <!-- <p>Ошибки:</p>
-      <p>{{ form.errors }}</p> -->
     </section>
     <script src="{% static 'modules/anime.js' %}"></script>
     <script src="{% static 'modules/triggers.js' %}"></script>
     <script src="{% static 'register/main.js' %}"></script>
+    {% endblock %}
   </body>
 </html>
-{% endblock %}
