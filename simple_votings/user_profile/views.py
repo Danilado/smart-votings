@@ -73,9 +73,38 @@ def register_user(request: HttpRequest):
     return register_page_render
 
 def description_vote(request):
-    all_data = Vote.objects.all()
+    data = Vote.objects.all()
+    theme = "None"
+    description = "None"
+    answer1 = "YES"
+    answer2 = "NO"
     id = 1
+    f = 0
+    s = 0
+    if request.method == "POST":
+        for item in data:
+            if item.id == id:
+                f = id.first + 1
+                pass
+        record = Vote(theme=theme, description=description, answer1="засчитал", answer2=answer2)
+        record.save()
+    if request.method == "POST":
+        for item in data:
+            if item.id == id:
+                s = id.second + 1
+                pass
+        record = Vote(theme=theme, description=description, answer1=answer1, answer2="засчитал")
+        record.save()
+    else:
+        record = Vote(theme=theme, description=description, answer1=answer1, answer2=answer2)
+        record.save()
+
+    all_data = Vote.objects.all()
     context = {}
     context['data'] = all_data
     context['id'] = id
+
+
+
+
     return render(request, "description_vote.html", context)
