@@ -84,15 +84,19 @@ def description_vote(request):
     if request.method == "POST":
         for item in data:
             if item.id == id:
-                f = id.first + 1
+                f += id.first
+                s += id.second
                 pass
+        f += 1
         record = Vote(theme=theme, description=description, answer1="засчитал", answer2=answer2, first=f, second=s)
         record.save()
     if request.method == "POST":
         for item in data:
             if item.id == id:
-                s = id.second + 1
+                s += id.second
+                f += id.first
                 pass
+        s += 1
         record = Vote(theme=theme, description=description, answer1=answer1, answer2="засчитал", first=f, second=s)
         record.save()
     else:
