@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
+html {
+  scroll-behavior: smooth;
+  overflow: hidden;
+}
+
+@-webkit-keyframes redpulse {
+  0% {
+    color: #fff;
+  }
+  50% {
+    color: #f00;
+  }
+  100% {
+    color: #fff;
+  }
+}
+
+@keyframes redpulse {
+  0% {
+    color: #fff;
+  }
+  50% {
+    color: #f00;
+  }
+  100% {
+    color: #fff;
+  }
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  color: #fff;
+}
+
+.error {
+  position: absolute;
+  top: 10vh;
+  -webkit-animation: redpulse 1s linear 3;
+          animation: redpulse 1s linear 3;
+}
+
+.bt {
+  color: #333;
+  pointer-events: none;
+  -webkit-transition: 0.3s;
+  transition: 0.3s;
+}
+
+body {
+  overflow: hidden;
+  font-size: 1.2em;
+  background: #222;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  min-height: 100vh;
+}
+
+body form {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 40px 20px;
+  display: block;
+  width: 20vw;
+  height: 20vw;
+  height: initial;
+  min-width: 300px;
+  min-height: 300px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -ms-flex-pack: distribute;
+      justify-content: space-around;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  border: 0px solid #000;
+  border-radius: 10px;
+}
+
+body form section {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+body form input {
+  min-width: 200px;
+  width: 12vw;
+  padding: 10px 15px;
+  border: none;
+  background: rgba(0, 0, 0, 0.2);
+}
+/*# sourceMappingURL=confirm.css.map */
