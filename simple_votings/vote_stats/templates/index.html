@@ -1,10 +1,35 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <title>Index page</title>
 </head>
 <body>
-$END$
+<span>Всего голосов {{sum_voted}}</span>
+<br>
+<span>Из них голосов за {{sum_voted_yes}}</span>
+<br>
+<span>И голосов против {{sum_voted_no}}</span>
+<br>
+<span>Голосов за {{compare}} голосов против</span>
+  <script src="https://www.google.com/jsapi"></script>
+  <script>
+   google.load("visualization", "1", {packages:["corechart"]});
+   google.setOnLoadCallback(drawChart);
+   function drawChart() {
+    var data = google.visualization.arrayToDataTable([
+     ['Голос', 'Количество'],
+     ['За',     {{sum_voted_yes}}],
+     ['Против', {{sum_voted_no}}]
+    ]);
+    var options = {
+     title: 'Голоса',
+     is3D: false
+    };
+    var chart = new google.visualization.PieChart(document.getElementById('voting'));
+     chart.draw(data, options);
+   }
+  </script>
+<div id="voting" style="width: 500px; height: 400px;"></div>
 </body>
 </html>
