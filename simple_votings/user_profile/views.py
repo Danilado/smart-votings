@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.utils.translation import gettext
 
 from user_profile.models import Vote
+from user_profile.forms  import DescForm
 
 
 @login_required
@@ -74,39 +75,28 @@ def register_user(request: HttpRequest):
 
 def description_vote(request):
     data = Vote.objects.all()
+    context = {}
     theme = "None"
     description = "None"
     answer1 = "YES"
     answer2 = "NO"
-    id = 1
-    f = 0
-    s = 0
+    id = 2
+    result = "None"
     if request.method == "POST":
-        for item in data:
-            if item.id == id:
-                f += id.first
-                s += id.second
-                pass
-        f += 1
-        record = Vote(theme=theme, description=description, answer1="засчитал", answer2=answer2, first=f, second=s)
+        Form = DescForm(request.POST)
+        result = Form.data["choice_field"]
+        record = Vote(theme=theme, description=description, answer1=answer1, answer2=answer2, result=result)
         record.save()
-    if request.method == "POST":
-        for item in data:
-            if item.id == id:
-                s += id.second
-                f += id.first
-                pass
-        s += 1
-        record = Vote(theme=theme, description=description, answer1=answer1, answer2="засчитал", first=f, second=s)
-        record.save()
+        context['form'] = Form
     else:
-        record = Vote(theme=theme, description=description, answer1=answer1, answer2=answer2, first=0, second=0)
-        record.save()
+        Form = DescForm()
+
 
     all_data = Vote.objects.all()
-    context = {}
+
     context['data'] = all_data
     context['id'] = id
+    context['form'] = Form
 
 
 

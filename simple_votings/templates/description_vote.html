@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <title>description_vote</title>
+</head>
     {%for item in data %}
     {% if item.id == id%}
     <h1>Тема голосования:{{ item.theme }}</h1>
@@ -11,11 +12,14 @@
     <hr>
     <form action="/description/", method="POST">
         {% csrf_token %}
-        <input type="submit" value='{{item.answer1}}'>
-        <input type="submit" value='{{item.answer2}}'>
+        {% for radio in form %}
+        {{ radio }}
+        {%endfor%}
+        <input type="submit" value='Отправить'>
     </form>
     {%endif%}
     {%endfor%}
+    <!--
     <h1>История</h1>
     <table>
       <tr>
@@ -24,8 +28,7 @@
           <td>Описание</td>
           <td>Первое</td>
           <td>Второе</td>
-          <td>Один</td>
-          <td>Два</td>
+          <td>Результат</td>
       </tr>
       {% for item in data %}
       <tr>
@@ -34,9 +37,9 @@
           <td>{{ item.description }}</td>
           <td>{{ item.answer1 }}</td>
           <td>{{ item.answer2 }}</td>
-          <!--<td>{{ item.first }}</td>
-          <td>{{ item.second }}</td>-->
+          <td>{{ item.result }}</td>
       </tr>
       {% endfor %}
+    </table>-->
 </body>
 </html>
