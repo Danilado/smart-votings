@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>description_vote</title>
+</head>
+<body>
+    <hr>
+    <hr>
+    {% for item in data %}
+    <h1>Тема голосования:{{ item.theme }}</h1>
+    <hr>
+    <h3>Описание:{{ item.description }}</h3>
+    <hr>
+    <form action="/description/", method="post">
+        {% csrf_token %}
+        <input type="submit" value='{{item.answer1}}'>
+        <p></p>
+        <input type="submit" value='{{item.answer2}}'>
+    </form>
+    <hr>
+    <hr>
+    {% endfor %}
+</body>
+</html>
