@@ -82,6 +82,5 @@ def description_vote(request):
 
 def show_all(request):
     all_data = Vote.objects.all()
-    context = {}
-    context['data'] = all_data
+    context = {'data': all_data}
     return render(request, "all.html", context)
