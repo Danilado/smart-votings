@@ -7,3 +7,5 @@ class Vote(models.Model):
     description = models.TextField()
     answer1 = models.TextField()
     answer2 = models.TextField()
+    result = models.TextField()
+

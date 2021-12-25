@@ -9,6 +9,7 @@ from django.shortcuts import render
 from django.utils.translation import gettext
 
 from user_profile.models import Vote
+from user_profile.forms  import DescForm
 
 
 @login_required
@@ -73,9 +74,31 @@ def register_user(request: HttpRequest):
     return register_page_render
 
 def description_vote(request):
-    all_data = Vote.objects.all()
-    id = 1
+    data = Vote.objects.all()
     context = {}
+    theme = "None"
+    description = "None"
+    answer1 = "YES"
+    answer2 = "NO"
+    id = 2
+    result = "None"
+    if request.method == "POST":
+        Form = DescForm(request.POST)
+        result = Form.data["choice_field"]
+        record = Vote(theme=theme, description=description, answer1=answer1, answer2=answer2, result=result)
+        record.save()
+        context['form'] = Form
+    else:
+        Form = DescForm()
+
+
+    all_data = Vote.objects.all()
+
     context['data'] = all_data
     context['id'] = id
+    context['form'] = Form
+
+
+
+
     return render(request, "description_vote.html", context)
