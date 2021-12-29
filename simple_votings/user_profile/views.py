@@ -9,8 +9,9 @@ from django.shortcuts import render
 from django.utils.translation import gettext
 
 from user_profile.models import Vote
+from user_profile.models import Votes
 from user_profile.forms  import DescForm
-
+from user_profile.forms  import AddVoteForm
 
 @login_required
 def get_user_profile_page(request: HttpRequest):
@@ -104,6 +105,21 @@ def description_vote(request):
     return render(request, "description_vote.html", context)
 
 def show_all(request):
-    all_data = Vote.objects.all()
+    all_data = Votes.objects.all()
     context = {'data': all_data}
     return render(request, "all.html", context)
+
+def add_new_vote(request):
+    context = {}
+    if request.method == "POST":
+        Form = AddVoteForm(request.POST)
+        theme = Form.data["theme"]
+        description = Form.data["description"]
+        answer1 = Form.data["answer1"]
+        answer2 = Form.data["answer2"]
+        record = Votes(theme=theme, description=description, answer1=answer1, answer2=answer2)
+        record.save()
+    else:
+        Form = AddVoteForm()
+    context['form'] = Form
+    return render(request, "add.html", context)
