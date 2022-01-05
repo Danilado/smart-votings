@@ -14,9 +14,17 @@
     <hr>
     <form action="/description/", method="post">
         {% csrf_token %}
-        <input type="submit" value='{{item.answer1}}'>
-        <p></p>
-        <input type="submit" value='{{item.answer2}}'>
+        <h5>Варианты ответов</h5>
+        {% for i in item.answers %}
+        {% if i == ';' %}
+        <br>
+        <br>
+        {% endif %}
+        {% if i != ';' %}
+        {{ i }}
+        {% endif %}
+
+        {% endfor %}
     </form>
     <hr>
     <hr>

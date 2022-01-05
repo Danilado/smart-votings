@@ -12,6 +12,5 @@ class Vote(models.Model):
 class Votes(models.Model):
     theme = models.TextField()
     description = models.TextField()
-    answer1 = models.TextField()
-    answer2 = models.TextField()
+    answers = models.TextField()
 

@@ -7,5 +7,4 @@ class DescForm(forms.Form):
 class AddVoteForm(forms.Form):
     theme = forms.CharField(label="Название")
     description = forms.CharField(label="Описание")
-    answer1 = forms.CharField(label="Первый вариант")
-    answer2 = forms.CharField(label="Второй вариант")
+    answers = forms.CharField(label="Введите варианты ответов, разделяя их знаком ; ")

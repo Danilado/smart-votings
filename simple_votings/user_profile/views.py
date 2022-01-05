@@ -74,7 +74,7 @@ def register_user(request: HttpRequest):
     register_page_render = render(request, "registration/register.html", context=context)
     return register_page_render
 
-def description_vote(request):
+def description_vote(request: HttpRequest):
     data = Vote.objects.all()
     context = {}
     theme = "None"
@@ -104,20 +104,21 @@ def description_vote(request):
 
     return render(request, "description_vote.html", context)
 
-def show_all(request):
+
+def show_all(request: HttpRequest):
     all_data = Votes.objects.all()
     context = {'data': all_data}
     return render(request, "all.html", context)
 
-def add_new_vote(request):
+
+def add_new_vote(request: HttpRequest):
     context = {}
     if request.method == "POST":
         Form = AddVoteForm(request.POST)
         theme = Form.data["theme"]
         description = Form.data["description"]
-        answer1 = Form.data["answer1"]
-        answer2 = Form.data["answer2"]
-        record = Votes(theme=theme, description=description, answer1=answer1, answer2=answer2)
+        answers = Form.data["answers"]
+        record = Votes(theme=theme, description=description, answers = answers)
         record.save()
     else:
         Form = AddVoteForm()
