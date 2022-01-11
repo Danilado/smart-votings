@@ -1,15 +1,12 @@
 from typing import Optional
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.forms import UsernameField
 from django.contrib.auth.models import AbstractUser, User
-from django.forms import CharField, EmailInput, TextInput, PasswordInput, forms
-from django.http import HttpRequest, HttpResponseRedirect, QueryDict
+from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
-from django.utils.translation import gettext
 
+from user_profile.forms import DescForm, RegistrationForm
 from user_profile.models import Vote
-from user_profile.forms  import DescForm
 
 
 @login_required
@@ -23,39 +20,23 @@ def get_user_profile_page(request: HttpRequest):
     return render(request, "accounts/profile.html")
 
 
-class RegistrationForm(forms.Form):
-    username = UsernameField(widget=TextInput(attrs={'autofocus': True}))
-    password = CharField(
-        label=gettext("Password"),
-        strip=False,
-        widget=PasswordInput(attrs={'autocomplete': 'current-password'}),
-    )
-    email = CharField(
-        label=gettext("Email"),
-        widget=EmailInput(),
-    )
-    error_messages = {
-        'already_exists': gettext(
-            "The user with that login already exists."
-        ),
-    }
+@login_required
+def change_user(request: HttpRequest):
+    # noinspection PyTypeHints
+    request.user: AbstractUser
+    assert request.user.is_authenticated
 
-    def is_valid(self):
-        result = super().is_valid()
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-        email = self.cleaned_data.get('email')
-        if User.objects.filter(username=username).first():
-            self.add_error(
-                "username",
-                self.error_messages['already_exists']
-            )
-        return result and username is not None and username and password is not None and email is not None and \
-            password and email
-
-    def __init__(self, data: QueryDict, *args, **kwargs):
-        super().__init__(data, *args, **kwargs)
-        self.data = data
+    context = dict(
+        form=RegistrationForm(request.POST, [request.user.username])
+    )
+    if len(request.POST) > 3 and context['form'].is_valid() and not context['form'].errors:
+        print(request.POST)
+        request.user.username = context['form'].cleaned_data.get("username", request.user.username)
+        request.user.set_password(context['form'].cleaned_data.get("password", request.user.password))
+        request.user.email = context['form'].cleaned_data.get("email", request.user.email)
+        request.user.save()
+        return HttpResponseRedirect("/auth/login")
+    return render(request, "registration/change_user.html", context)
 
 
 def register_user(request: HttpRequest):
@@ -73,35 +54,31 @@ def register_user(request: HttpRequest):
     register_page_render = render(request, "registration/register.html", context=context)
     return register_page_render
 
+
 def description_vote(request):
-    data = Vote.objects.all()
     context = {}
     theme = "None"
     description = "None"
     answer1 = "YES"
     answer2 = "NO"
-    id = 2
-    result = "None"
+    user_id = 2
     if request.method == "POST":
-        Form = DescForm(request.POST)
-        result = Form.data["choice_field"]
+        form = DescForm(request.POST)
+        result = form.data["choice_field"]
         record = Vote(theme=theme, description=description, answer1=answer1, answer2=answer2, result=result)
         record.save()
-        context['form'] = Form
+        context['form'] = form
     else:
-        Form = DescForm()
-
+        form = DescForm()
 
     all_data = Vote.objects.all()
 
     context['data'] = all_data
-    context['id'] = id
-    context['form'] = Form
-
-
-
+    context['id'] = user_id
+    context['form'] = form
 
     return render(request, "description_vote.html", context)
+
 
 def show_all(request):
     all_data = Vote.objects.all()
