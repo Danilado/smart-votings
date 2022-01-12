@@ -14,6 +14,14 @@ class DescForm(forms.Form):
     choice_field = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
 
 
+
+class AddVoteForm(forms.Form):
+    theme = forms.CharField(label="Название")
+    description = forms.CharField(label="Описание")
+    answers = forms.CharField(label="Введите варианты ответов, разделяя их знаком ; ")
+
+
+
 class RegistrationForm(forms.Form):
     username = UsernameField(widget=TextInput(attrs={'autofocus': True}))
     password = forms.CharField(
