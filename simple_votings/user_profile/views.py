@@ -9,6 +9,7 @@ from user_profile.forms import AddVoteForm
 from user_profile.forms import DescForm
 from user_profile.models import UserVote
 from user_profile.models import Vote
+form user_profile.forms import RegistrationForm
 
 
 @login_required
