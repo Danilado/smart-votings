@@ -11,13 +11,12 @@ class Migration(migrations.Migration):
 
     operations = [
         migrations.CreateModel(
-            name='Votes',
+            name='Vote',
             fields=[
                 ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
                 ('theme', models.TextField()),
                 ('description', models.TextField()),
-                ('answer1', models.TextField()),
-                ('answer2', models.TextField()),
+                ('answers', models.TextField()),
             ],
         ),
     ]

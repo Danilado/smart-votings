@@ -8,10 +8,11 @@ from django.http import HttpRequest, HttpResponseRedirect, QueryDict
 from django.shortcuts import render
 from django.utils.translation import gettext
 
+from user_profile.forms import AddVoteForm
+from user_profile.forms import DescForm
+from user_profile.models import UserVote
 from user_profile.models import Vote
-from user_profile.models import Votes
-from user_profile.forms  import DescForm
-from user_profile.forms  import AddVoteForm
+
 
 @login_required
 def get_user_profile_page(request: HttpRequest):
@@ -74,53 +75,43 @@ def register_user(request: HttpRequest):
     register_page_render = render(request, "registration/register.html", context=context)
     return register_page_render
 
+
 def description_vote(request: HttpRequest):
-    data = Vote.objects.all()
     context = {}
-    theme = "None"
     description = "None"
     answer1 = "YES"
     answer2 = "NO"
-    id = 2
-    result = "None"
+    user_id = 2
+    form = DescForm(request.POST if request.method == "POST" else None)
     if request.method == "POST":
-        Form = DescForm(request.POST)
-        result = Form.data["choice_field"]
-        record = Vote(theme=theme, description=description, answer1=answer1, answer2=answer2, result=result)
+        result = form.data["choice_field"]
+        record = UserVote(description=description, answer1=answer1, answer2=answer2, result=result)
         record.save()
-        context['form'] = Form
-    else:
-        Form = DescForm()
+        context['form'] = form
 
-
-    all_data = Vote.objects.all()
+    all_data = UserVote.objects.all()
 
     context['data'] = all_data
-    context['id'] = id
-    context['form'] = Form
-
-
-
+    context['id'] = user_id
+    context['form'] = form
 
     return render(request, "description_vote.html", context)
 
 
 def show_all(request: HttpRequest):
-    all_data = Votes.objects.all()
+    all_data = Vote.objects.all()
     context = {'data': all_data}
     return render(request, "all.html", context)
 
 
 def add_new_vote(request: HttpRequest):
     context = {}
+    form = AddVoteForm(request.POST if request.method == "POST" else None)
     if request.method == "POST":
-        Form = AddVoteForm(request.POST)
-        theme = Form.data["theme"]
-        description = Form.data["description"]
-        answers = Form.data["answers"]
-        record = Votes(theme=theme, description=description, answers = answers)
+        theme = form.data["theme"]
+        description = form.data["description"]
+        answers = form.data["answers"]
+        record = Vote(theme=theme, description=description, answers=answers)
         record.save()
-    else:
-        Form = AddVoteForm()
-    context['form'] = Form
+    context['form'] = form
     return render(request, "add.html", context)

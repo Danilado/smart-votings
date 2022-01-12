@@ -3,13 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <title>add new vote</title>
-     <form action="/add/", method="POST">
-        {% csrf_token %}
-         {{ form }}
-         <input type="submit" value='Создать'>
-     </form>
 </head>
 <body>
-
+    <form action="/add/" method="POST">
+        {% csrf_token %}
+        {{ form }}
+        <input type="submit" value='Создать'>
+    </form>
 </body>
 </html>

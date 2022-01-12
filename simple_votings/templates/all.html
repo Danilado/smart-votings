@@ -8,26 +8,24 @@
     <hr>
     <hr>
     {% for item in data %}
-    <h1>Тема голосования:{{ item.theme }}</h1>
-    <hr>
-    <h3>Описание:{{ item.description }}</h3>
-    <hr>
-    <form action="/description/", method="post">
-        {% csrf_token %}
-        <h5>Варианты ответов</h5>
-        {% for i in item.answers %}
-        {% if i == ';' %}
-        <br>
-        <br>
-        {% endif %}
-        {% if i != ';' %}
-        {{ i }}
-        {% endif %}
-
-        {% endfor %}
-    </form>
-    <hr>
-    <hr>
+        <h1>Тема голосования:{{ item.theme }}</h1>
+        <hr>
+        <h3>Описание:{{ item.description }}</h3>
+        <hr>
+        <form action="/description/" method="post">
+            {% csrf_token %}
+            <h5>Варианты ответов</h5>
+            {% for i in item.answers %}
+                {% if i == ';' %}
+                <br>
+                <br>
+                {% else %}
+                {{ i }}
+                {% endif %}
+            {% endfor %}
+        </form>
+        <hr>
+        <hr>
     {% endfor %}
 </body>
 </html>
