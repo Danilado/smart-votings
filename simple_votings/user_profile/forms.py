@@ -7,6 +7,7 @@ from django.forms import EmailInput, TextInput, PasswordInput
 from django.http import QueryDict
 
 
+
 class DescForm(forms.Form):
     CHOICES = [
         ('1', 'YES'), ('2', 'NO')

@@ -5,7 +5,9 @@ from django.contrib.auth.models import AbstractUser, User
 from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
 
-from user_profile.forms import DescForm, RegistrationForm
+from user_profile.forms import AddVoteForm
+from user_profile.forms import DescForm
+from user_profile.models import UserVote
 from user_profile.models import Vote
 
 
@@ -55,23 +57,20 @@ def register_user(request: HttpRequest):
     return register_page_render
 
 
-def description_vote(request):
+def description_vote(request: HttpRequest):
     context = {}
-    theme = "None"
     description = "None"
     answer1 = "YES"
     answer2 = "NO"
     user_id = 2
+    form = DescForm(request.POST if request.method == "POST" else None)
     if request.method == "POST":
-        form = DescForm(request.POST)
         result = form.data["choice_field"]
-        record = Vote(theme=theme, description=description, answer1=answer1, answer2=answer2, result=result)
+        record = UserVote(description=description, answer1=answer1, answer2=answer2, result=result)
         record.save()
         context['form'] = form
-    else:
-        form = DescForm()
 
-    all_data = Vote.objects.all()
+    all_data = UserVote.objects.all()
 
     context['data'] = all_data
     context['id'] = user_id
@@ -80,7 +79,20 @@ def description_vote(request):
     return render(request, "description_vote.html", context)
 
 
-def show_all(request):
+def show_all(request: HttpRequest):
     all_data = Vote.objects.all()
     context = {'data': all_data}
     return render(request, "all.html", context)
+
+
+def add_new_vote(request: HttpRequest):
+    context = {}
+    form = AddVoteForm(request.POST if request.method == "POST" else None)
+    if request.method == "POST":
+        theme = form.data["theme"]
+        description = form.data["description"]
+        answers = form.data["answers"]
+        record = Vote(theme=theme, description=description, answers=answers)
+        record.save()
+    context['form'] = form
+    return render(request, "add.html", context)

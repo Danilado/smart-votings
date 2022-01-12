@@ -25,6 +25,7 @@ urlpatterns = [
     path("accounts/profile", get_user_profile_page),
     path("description/", description_vote),
     path("show/", show_all),
+    path("add/", add_new_vote)
 ]
 
 urlpatterns += staticfiles_urlpatterns()
