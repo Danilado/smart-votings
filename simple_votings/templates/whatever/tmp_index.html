@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>да...</title>
+  </head>
+  <body>
+    <style>
+      body {
+        overflow: hidden;
+        background: #000;
+        height: 100vh;
+        width: 100vw;
+      }
+      html {
+        overflow: hidden;
+      }
+    </style>
+    <div></div>
+    <script>
+      let insults = [
+        "СДЕЛАЙТЕ НАЧАЛЬНУЮ СТРАНИЦУ",
+        "СДЕЛАЙТЕ НАЧАЛЬНУЮ СТРАНИЦУ",
+        "СДЕЛАЙТЕ НАЧАЛЬНУЮ СТРАНИЦУ",
+        "СДЕЛАЙТЕ НАЧАЛЬНУЮ СТРАНИЦУ",
+        "СДЕЛАЙТЕ НАЧАЛЬНУЮ СТРАНИЦУ",
+        "СДЕЛАЙТЕ НАЧАЛЬНУЮ СТРАНИЦУ",
+        "НАЧАЛЬНОЙ СТРАНИЦЫ НЕ БУДЕТ",
+        "НАЧАЛЬНОЙ СТРАНИЦЫ НЕ БУДЕТ",
+        "НАЧАЛЬНОЙ СТРАНИЦЫ НЕ БУДЕТ",
+        "НАЧАЛЬНОЙ СТРАНИЦЫ НЕ БУДЕТ",
+        "НАЧАЛЬНОЙ СТРАНИЦЫ НЕ БУДЕТ",
+        "ЭТА СТРАНИЦА ОТСТОЙ, ...",
+        "ЭТА СТРАНИЦА ОТСТОЙ, ...",
+        "ЭТА СТРАНИЦА ОТСТОЙ, ...",
+        "ЭТА СТРАНИЦА ОТСТОЙ, ...",
+        "ТЕМА СИСЕК НЕ РАСКРЫТА",
+        "OwO",
+        "<i>SAMPLE TEXT IN ITALICS</i>",
+        "LOREM IPSUM",
+        "ПРОДАМ ПИВО",
+        "4ИСЛО",
+        "КАКОГО Я ЦВЕТА?",
+        "АХАХАХАХАХАХАХА",
+        "?",
+        "*<i>blushes</i>*",
+        "ЗАХОДИТ МУЖИК В БАР...",
+        "...А ОНА ЕМУ КАК РАЗ",
+        "MUSTACHE HAIR",
+        '<img src="https://cdn.7tv.app/emote/60afa4eba3648f409acc80ae/4x">',
+        '<img src="https://cdn.7tv.app/emote/60ae958e229664e8667aea38/4x">',
+        '<img src="https://cdn.7tv.app/emote/60b9293255c320f0e805d6b9/4x">',
+        '<img src="https://cdn.7tv.app/emote/60aea05e4b1ea4526df62906/4x">',
+        '<img src="https://cdn.7tv.app/emote/60af912352a13d1adb2612ec/4x">',
+        '<img src="https://cdn.7tv.app/emote/61dd505657c70f633ebdadc8/4x">',
+        '<img src="https://cdn.7tv.app/emote/60b1a41020b432903ad7129a/4x">',
+        '<img src="https://cdn.7tv.app/emote/60af9e3b52a13d1adb78e15e/4x">',
+        '<img src="https://cdn.7tv.app/emote/61056560b80f269577bcd6fe/4x">',
+        '<img src="https://cdn.7tv.app/emote/60da2f42df4f4c65b868c371/4x">',
+        "МЕНЯ СЛЫШНО?",
+        "ПРОВАЙДЕР М*!@K!",
+        "МЕНЯ СЛЫШНО?",
+        "ТРАССИРУЮ СИГНАЛ ИЗ КОСМОСА",
+        "LIGMA",
+        "ЭТО СТАТИЧНЫЙ ФАЙЛ?",
+        "СЕРВЕР В ПОРЯДКЕ?",
+        "ЗАБЫЛ ОПЛАТИТЬ ХОСТИНГ....",
+        "ᘛ⁐̤ᕐᐷ",
+        "(╯°□°)╯︵ ┻━┻",
+        "AMOGUS",
+        '<a href="https://discord.gg/EMudh3uqtb"> https://discord.gg/EMudh3uqtb </>',
+        "ИЩИ СЕБЯ",
+        "КТО МЯУКАЕТ?",
+        "МЯЯЯЯЯУ",
+        "ПАПИЧ ЖУЁТ",
+        "<b>ТОЛСТЫЙ</b>",
+        "КТО В СИНЕГО КИТА?",
+      ];
+      let b = document.querySelector("body");
+      class Crap {
+        constructor() {
+          this.size = Math.random() * 3 + 1;
+          this.x = window.innerWidth;
+          this.y = Math.random() * (window.innerHeight - 80) + 40;
+          this.shade = (Math.floor(Math.random() * 128) + 128 + ",").repeat(3);
+          this.node = document.createElement("span");
+          this.node.style.cssText = `
+          white-space: nowrap;
+          position: fixed;
+          display: block;
+          font-size: ${this.size}em;
+          top: ${this.y}px;
+          left: ${this.x}px;
+          color: rgba(${this.shade} 1);
+          height: ${this.size}em;
+          `;
+          this.node.innerHTML =
+            insults[Math.floor(Math.random() * insults.length)];
+          this.speed = Math.floor(Math.random() * 2) + this.size * 2;
+          b.appendChild(this.node);
+          this.target = this.node.getBoundingClientRect().width * -1;
+          this.reset = 0;
+        }
+        render() {
+          this.node.style.left = this.x + "px";
+        }
+        update() {
+          if (this.x > this.target) {
+            this.x -= this.speed;
+          } else {
+            this.node.remove();
+            this.reset = 1;
+          }
+        }
+      }
+
+      let svin = [];
+      for (i = 0; i < 20; ++i) svin.push(new Crap());
+      function upd() {
+        for (i in svin) if (svin[i].reset) svin[i] = new Crap();
+        requestAnimationFrame(upd);
+        for (i in svin) {
+          svin[i].render();
+          svin[i].update();
+        }
+      }
+      upd();
+    </script>
+  </body>
+</html>
