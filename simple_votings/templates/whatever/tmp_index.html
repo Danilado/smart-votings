@@ -1,3 +1,4 @@
+{% load static %}
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -7,12 +8,63 @@
     <title>да...</title>
   </head>
   <body>
+    <div class="f1"></div>
+    <div class="f2"></div>
     <style>
       body {
         overflow: hidden;
-        background: #000;
         height: 100vh;
         width: 100vw;
+        padding: 0;
+        margin: 0;
+        animation: bg 40s linear infinite;
+        background-repeat: repeat;
+        background-image: url({% static 'img/seamlessahegao.png' %});
+      }
+      @keyframes bg {
+        0% {
+          background-position: 0;
+        }
+        100%{
+          background-position: -1920px;
+        }
+      }
+      @keyframes rain {
+        0% {
+          background-color: rgba(128, 0, 128, 0.02);
+        }
+        14%{
+          background-color: rgba(255, 0, 255, 0.05);
+        }
+        28%{
+          background-color: rgba(0, 0, 255, 0.02);
+        }
+        42%{
+          background-color: rgba(0, 255, 255, 0.02);
+        }
+        56%{
+          background-color: rgba(255, 165, 0, 0.02);
+        }
+        70%{
+          background-color: rgba(255, 140, 0, 0.02);
+        }
+        84%{
+          background-color: rgba(139, 0, 0, 0.02);
+        }
+        100%{
+          background-position: rgba(255, 0, 0, 0.02);
+        }
+      }
+      .f1, .f2{
+        position: fixed;
+        height: 100%;
+        width: 100%;
+      }
+      .f1{
+        background: rgba(0, 0, 0, 0.95);
+      }
+      .f2{
+        animation: rain 40s infinite linear;
       }
       html {
         overflow: hidden;
@@ -65,7 +117,7 @@
         '<img src="https://cdn.7tv.app/emote/60af9e3b52a13d1adb78e15e/4x">',
         '<img src="https://cdn.7tv.app/emote/61056560b80f269577bcd6fe/4x">',
         '<img src="https://cdn.7tv.app/emote/60da2f42df4f4c65b868c371/4x">',
-        '<img src="https://cdn.7tv.app/emote/6180e0a7e0801fb98788dbc9/4x">',
+        '<img src="https://cdn.7tv.app/emote/61c0ad7bca95dd3275b8bbde/4x">',
         "МЕНЯ СЛЫШНО?",
         "ПРОВАЙДЕР М*!@K!",
         "МЕНЯ СЛЫШНО?",
@@ -79,11 +131,14 @@
         "AMOGUS",
         '<a href="https://discord.gg/EMudh3uqtb"> https://discord.gg/EMudh3uqtb </>',
         '<a href="./auth/login/"> ВОЙТИ В АККАУНТ </>',
-        '<a href="./auth/register"> РЕГИСТРАЦИЯ </>',
+        '<a href="./auth/login/"> ВОЙТИ В АККАУНТ </>',
         '<a href="./auth/login/"> ВОЙТИ В АККАУНТ </>',
         '<a href="./auth/register"> РЕГИСТРАЦИЯ </>',
-        '<a href="./auth/login/"> ВОЙТИ В АККАУНТ </>',
         '<a href="./auth/register"> РЕГИСТРАЦИЯ </>',
+        '<a href="./auth/register"> РЕГИСТРАЦИЯ </>',
+        '<a href="./add/"> СОЗДАТЬ ГОЛОСОВАНИЕ </>',
+        '<a href="./add/"> СОЗДАТЬ ГОЛОСОВАНИЕ </>',
+        '<a href="./add/"> СОЗДАТЬ ГОЛОСОВАНИЕ </>',
         "ИЩИ СЕБЯ",
         "КТО МЯУКАЕТ?",
         "МЯЯЯЯЯУ",

@@ -1,14 +1,41 @@
+{% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>add new vote</title>
-</head>
-<body>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Создать новое голосование</title>
+    <link rel="stylesheet" href="{% static 'base/style.css' %}" />
+  </head>
+  <body>
     <form action="/add/" method="POST">
-        {% csrf_token %}
-        {{ form }}
-        <input type="submit" value='Создать'>
+      {% csrf_token %}
+      <table>
+        <tr>
+          <td>Заголовок голосования</td>
+          <td>{{ form.theme }}</td>
+        </tr>
+        <tr>
+          <td>Описание голосования</td>
+          <td>{{ form.description }}</td>
+        </tr>
+        <tr>
+          <td>
+            Варианты ответа
+            <span
+              style="
+                color: rgba(255, 255, 255, 0.25);
+                font-size: 0.8em;
+                margin: 0;
+              "
+              ><br />
+              разделённые символом ;
+            </span>
+          </td>
+          <td>{{ form.answers }}</td>
+        </tr>
+      </table>
+      <input type="submit" value="Создать" class="bt" />
     </form>
-</body>
+    <script src="{% static 'addPole/main.js' %}"></script>
+  </body>
 </html>
