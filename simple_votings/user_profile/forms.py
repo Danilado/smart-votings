@@ -17,14 +17,14 @@ class DescForm(forms.Form):
 
 
 
-class AddVoteForm(forms.Form):
+class AddVoteForm(forms.Form): # add new vote
     theme = forms.CharField(label="Название")
     description = forms.CharField(label="Описание")
     answers = forms.CharField(label="Введите варианты ответов, разделяя их знаком ; ")
 
 
 
-class RegistrationForm(forms.Form):
+class RegistrationForm(forms.Form): # register
     username = UsernameField(widget=TextInput(attrs={'autofocus': True}))
     password = forms.CharField(
         label=gettext("Password"),
