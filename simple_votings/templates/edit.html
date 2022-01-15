@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование голосования {{ old_theme }}</title>
+</head>
+<body>
+    {% if form.errors and form %}
+        {% for field in form %}
+            {% for error in field.errors %}
+                <p>{{ error|escape }}</p>
+            {% endfor %}
+        {% endfor %}
+    {% endif %}
+    <form action="#" method="post">
+        {% csrf_token %}
+        <input type="hidden" name="old_theme" value="{{ old_theme }}">
+        {{ form }}
+        <input type="submit" value="Изменить">
+    </form>
+</body>
+</html>
