@@ -24,7 +24,7 @@ def get_user_profile_page(request: HttpRequest):
 
 
 @login_required
-def change_user(request: HttpRequest):
+def change_user(request: HttpRequest): # change current user
     # noinspection PyTypeHints
     request.user: AbstractUser
     assert request.user.is_authenticated
@@ -42,7 +42,7 @@ def change_user(request: HttpRequest):
     return render(request, "registration/change_user.html", context)
 
 
-def register_user(request: HttpRequest):
+def register_user(request: HttpRequest): # register new user
     context = dict(
         form=RegistrationForm(request.POST)
     )

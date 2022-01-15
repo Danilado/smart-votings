@@ -13,7 +13,7 @@ from user_profile.models import Vote
 def super_voleyball(request: HttpRequest):
     return render(request, 'whatever/tmp_index.html')
 
-def description_vote(request: HttpRequest):
+def description_vote(request: HttpRequest): # votings description
     context = {}
     description = "None"
     answer1 = "YES"
@@ -26,7 +26,7 @@ def description_vote(request: HttpRequest):
         record.save()
         context['form'] = form
 
-    all_data = UserVote.objects.all()
+    all_data = UserVote.objects.all() 
 
     context['data'] = all_data
     context['id'] = user_id
@@ -35,13 +35,13 @@ def description_vote(request: HttpRequest):
     return render(request, "description_vote.html", context)
 
 
-def show_all(request: HttpRequest):
+def show_all(request: HttpRequest): # all votings
     all_data = Vote.objects.all()
     context = {'data': all_data}
     return render(request, "all.html", context)
 
 
-def add_new_vote(request: HttpRequest):
+def add_new_vote(request: HttpRequest): # new voting
     context = {}
     form = AddVoteForm(request.POST if request.method == "POST" else None)
     if request.method == "POST":
