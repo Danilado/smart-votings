@@ -11,7 +11,8 @@ from django.http import QueryDict
 class DescForm(forms.Form):
     CHOICES = [
         ('1', 'YES'), ('2', 'NO')
-    ]  # в бд хранится номер варианта ответа: 1 - "yes", 2 - "no"
+    ]  # Vlastelin a.k.a kotuk: тот кто теперь должен делать подсчет, в бд хранится номер варианта ответа yes - 1, no - 2
+       # gospodin:      но почему не 0 и 1 ?
     choice_field = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
 
 
