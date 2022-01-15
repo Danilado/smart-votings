@@ -25,6 +25,10 @@
             {% endfor %}
         </form>
         <hr>
+        <form action="/edit/" method="get">
+            <input type="hidden" name="old_theme" value="{{ item.theme }}">
+            <input type="submit" value="Изменить">
+        </form>
         <hr>
     {% endfor %}
 </body>

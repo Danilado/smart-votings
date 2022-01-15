@@ -5,18 +5,14 @@ from django.contrib.auth.models import AbstractUser, User
 from django.http import HttpRequest, HttpResponseRedirect
 from django.shortcuts import render
 
-from user_profile.forms import AddVoteForm
-from user_profile.forms import DescForm
-from user_profile.models import UserVote
+from user_profile.forms import RegistrationForm, AddVoteForm
 from user_profile.models import Vote
-from user_profile.forms import RegistrationForm
 
 
 @login_required
 def get_user_profile_page(request: HttpRequest):
     # noinspection PyTypeHints
     request.user: AbstractUser
-    assert request.user.is_authenticated
 
     print(request.user)
 
@@ -27,7 +23,6 @@ def get_user_profile_page(request: HttpRequest):
 def change_user(request: HttpRequest): # change current user
     # noinspection PyTypeHints
     request.user: AbstractUser
-    assert request.user.is_authenticated
 
     context = dict(
         form=RegistrationForm(request.POST, [request.user.username])
@@ -56,3 +51,20 @@ def register_user(request: HttpRequest): # register new user
             return HttpResponseRedirect('/auth/login')
     register_page_render = render(request, "registration/register.html", context=context)
     return register_page_render
+
+
+def change_vote(request: HttpRequest):
+    context = dict(
+        form=AddVoteForm(request.POST if request.method == "POST" else None),
+        old_theme=request.POST.get("old_theme") if request.method == "POST" else request.GET.get("old_theme")
+    )
+    if context['form'].is_valid() and not context['form'].errors:
+        vote: Optional[Vote] = Vote.objects.filter(theme=context['old_theme']).first()
+        valid_old_theme = context['old_theme'] is not None and vote
+        if valid_old_theme:
+            vote.theme = context['form'].cleaned_data.get("theme")
+            vote.description = context['form'].cleaned_data.get('description')
+            vote.answers = context['form'].cleaned_data.get('answers')
+            vote.save()
+            return HttpResponseRedirect("/show/")
+    return render(request, "edit.html", context)
