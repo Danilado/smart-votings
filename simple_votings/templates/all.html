@@ -7,7 +7,7 @@
 <body>
     <hr>
     <hr>
-    {% for item in data %}
+    {% for item in data %} <!-- TODO: Refactor-щик переименуй item в другое подходящее название, например vote -->
         <h1>Тема голосования:{{ item.theme }}</h1>
         <hr>
         <h3>Описание:{{ item.description }}</h3>
@@ -28,6 +28,10 @@
         <form action="/edit/" method="get">
             <input type="hidden" name="old_theme" value="{{ item.theme }}">
             <input type="submit" value="Изменить">
+        </form>
+        <form action="/vote/report" method="get">
+            <input type="hidden" name="vote_theme" value="{{ item.theme }}">
+            <input type="submit" value="Пожаловаться">
         </form>
         <hr>
     {% endfor %}
