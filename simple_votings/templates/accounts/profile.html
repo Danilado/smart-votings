@@ -1,7 +1,10 @@
 {% extends "../base.html" %}
 
 {% block content %}
-<p>Здесь должен быть макет профиля</p>
-<a href="/auth/logout">Выйти</a>
-<a href="/auth/change">Поменять профиль</a>
+    <p>Здесь должен быть макет профиля</p>
+    <a href="/auth/logout">Выйти</a>
+    <a href="/auth/change">Поменять профиль</a>
+    {% if is_moderator %}
+        <a href="/vote/report/table">Репорты голосований</a>
+    {% endif %}
 {% endblock %}

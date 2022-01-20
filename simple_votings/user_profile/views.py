@@ -15,7 +15,8 @@ def get_user_profile_page(request: HttpRequest):
     # noinspection PyTypeHints
     request.user: AbstractUser
 
-    return render(request, "accounts/profile.html")
+    context = {"is_moderator": request.user.groups.filter(name="Moderator").first() is not None}
+    return render(request, "accounts/profile.html", context)
 
 
 @permission_required("auth.change_user")
@@ -94,3 +95,10 @@ def create_report(request: HttpRequest):
         report.save()
         return HttpResponseRedirect("/show/")
     return render(request, "vote_report/create.html", context)
+
+
+@permission_required("user_profile.view_report")
+@login_required
+def report_table(request: HttpRequest):
+    context = {"reports": Report.objects.all()}
+    return render(request, "vote_report/reports_table.html", context)
