@@ -8,9 +8,11 @@
 <h1>Репорты</h1>
 {% for report in reports %}
     <br>
-    <h1>{{ report.theme }} от {{ report.author.username }}</h1>
+    <h1>{{ report.theme }} от пользователя {{ report.author.username }}</h1>
     <h2>{{ report.content }}</h2>
-    <p>Id: {{ report.id }}</p>
+
+    <p>ID голосования: {{ report.vote.id }}</p>
+    <p>Тема голосования: {{ report.vote.theme }}</p>
     <form action="/vote/report/delete" method="post">
         {% csrf_token %}
         <input type="hidden" name="id" value="{{ report.id }}">

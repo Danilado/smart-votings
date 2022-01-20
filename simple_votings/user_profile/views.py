@@ -79,14 +79,16 @@ def create_report(request: HttpRequest):
     context = dict(
         # TODO: Refactor-щик вынеси if в отдельную функцию.
         form=CreateReportForm(request.POST if request.method == "POST" else None),
-        vote_theme=request.GET.get("vote_theme") if request.method == "GET" else request.POST.get("vote_theme")
+        id=request.GET.get("id") if request.method == "GET" else request.POST.get("id")
     )
-    if context['vote_theme'] is None:
+    context['vote'] = Vote.objects.filter(id=context['id']).first()
+    if context['id'] is None or context['vote'] is None:
         return HttpResponseBadRequest()
     if context['form'].is_valid():
         report = Report(author=request.user,
                         theme=context['form'].cleaned_data['theme'],
-                        content=context['form'].cleaned_data['content'])
+                        content=context['form'].cleaned_data['content'],
+                        vote=context['vote'])
         report.save()
         return HttpResponseRedirect("/show/")
     return render(request, "vote_report/create.html", context)
