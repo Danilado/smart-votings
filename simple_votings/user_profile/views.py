@@ -103,9 +103,19 @@ def report_table(request: HttpRequest):
 @login_required
 def delete_vote(request: HttpRequest):
     vote: Optional[Vote] = Vote.objects.filter(id=int(request.POST.get('id', ""))).first()  # Почему +1? Не знаю.
-    print(request.method, vote, request.POST)
     valid_request = request.method == "POST" and "id" in request.POST and vote is not None
     if not valid_request:
         return HttpResponseBadRequest()
     vote.delete()
     return HttpResponseRedirect("/show/")
+
+
+@permission_required("user_profile.delete_report")
+@login_required
+def delete_report(request: HttpRequest):
+    report: Optional[Report] = Report.objects.filter(id=int(request.POST.get('id', ""))).first()
+    valid_request = request.method == "POST" and "id" in request.POST and report is not None
+    if not valid_request:
+        return HttpResponseBadRequest()
+    report.delete()
+    return HttpResponseRedirect("/vote/report/table")

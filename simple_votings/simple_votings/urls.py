@@ -16,7 +16,8 @@ urlpatterns = [
     path("edit/", change_vote),
     path("vote/delete", delete_vote),
     path("vote/report/create", create_report),
-    path("vote/report/table", report_table)
+    path("vote/report/table", report_table),
+    path("vote/report/delete", delete_report)
 ]
 
 urlpatterns += staticfiles_urlpatterns()
