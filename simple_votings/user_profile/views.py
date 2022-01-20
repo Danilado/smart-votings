@@ -1,7 +1,7 @@
-from typing import Optional
+from typing import Optional, Union
 
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.models import AbstractUser, User, Group
+from django.contrib.auth.models import AbstractUser, User, Group, PermissionsMixin, AnonymousUser
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render
 
@@ -9,22 +9,20 @@ from user_profile.forms import RegistrationForm, AddVoteForm, CreateReportForm
 from user_profile.models import Vote, Report
 
 
+def is_moderator(user: Union[PermissionsMixin, AnonymousUser]) -> bool:
+    return user.groups.filter(name="Moderator").first() is not None
+
+
 @permission_required("auth.view_user")
 @login_required
 def get_user_profile_page(request: HttpRequest):
-    # noinspection PyTypeHints
-    request.user: AbstractUser
-
-    context = {"is_moderator": request.user.groups.filter(name="Moderator").first() is not None}
+    context = {"is_moderator": is_moderator(request.user)}
     return render(request, "accounts/profile.html", context)
 
 
 @permission_required("auth.change_user")
 @login_required
 def change_user(request: HttpRequest):  # change current user
-    # noinspection PyTypeHints
-    request.user: AbstractUser
-
     context = dict(
         form=RegistrationForm(request.POST, [request.user.username])
     )
@@ -78,9 +76,6 @@ def change_vote(request: HttpRequest):
 @permission_required("user_profile.add_report")
 @login_required
 def create_report(request: HttpRequest):
-    # noinspection PyTypeHints
-    request.user: AbstractUser
-
     context = dict(
         # TODO: Refactor-щик вынеси if в отдельную функцию.
         form=CreateReportForm(request.POST if request.method == "POST" else None),
@@ -102,3 +97,15 @@ def create_report(request: HttpRequest):
 def report_table(request: HttpRequest):
     context = {"reports": Report.objects.all()}
     return render(request, "vote_report/reports_table.html", context)
+
+
+@permission_required("user_profile.delete_vote")
+@login_required
+def delete_vote(request: HttpRequest):
+    vote: Optional[Vote] = Vote.objects.filter(id=int(request.POST.get('id', ""))).first()  # Почему +1? Не знаю.
+    print(request.method, vote, request.POST)
+    valid_request = request.method == "POST" and "id" in request.POST and vote is not None
+    if not valid_request:
+        return HttpResponseBadRequest()
+    vote.delete()
+    return HttpResponseRedirect("/show/")

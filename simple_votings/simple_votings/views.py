@@ -6,6 +6,7 @@ from user_profile.forms import AddVoteForm
 from user_profile.forms import DescForm
 from user_profile.models import UserVote
 from user_profile.models import Vote
+from user_profile.views import is_moderator
 
 
 def super_voleyball(request: HttpRequest):
@@ -38,7 +39,8 @@ def description_vote(request: HttpRequest):  # votings description
 @permission_required("user_profile.view_vote")
 def show_all(request: HttpRequest):  # all votings
     all_data = Vote.objects.all()
-    context = {'data': all_data}
+    context = {'data': all_data,
+               "is_moderator": is_moderator(request.user)}
     return render(request, "all.html", context)
 
 

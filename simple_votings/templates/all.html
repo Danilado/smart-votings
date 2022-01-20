@@ -29,10 +29,17 @@
             <input type="hidden" name="old_theme" value="{{ item.theme }}">
             <input type="submit" value="Изменить">
         </form>
+        {% if is_moderator %}
         <form action="/vote/report/create" method="get">
             <input type="hidden" name="vote_theme" value="{{ item.theme }}">
             <input type="submit" value="Пожаловаться">
         </form>
+        <form action="/vote/delete" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ item.id }}">
+            <input type="submit" value="Удалить">
+        </form>
+        {% endif %}
         <hr>
     {% endfor %}
 </body>
