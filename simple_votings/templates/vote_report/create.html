@@ -1,0 +1,14 @@
+{% extends "../base.html" %}
+
+{% block head %}
+<title>Жалоба на голосование {{ vote_theme }}</title>
+{% endblock %}
+
+{% block content %}
+<form action="#" method="post">
+  {% csrf_token %}
+  <input type="hidden" name="vote_theme" value="{{ vote_theme }}">
+  {{ form }}
+  <input type="submit" value="Пожаловаться модератору">
+</form>
+{% endblock %}

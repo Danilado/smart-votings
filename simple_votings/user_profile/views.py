@@ -2,11 +2,11 @@ from typing import Optional
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AbstractUser, User
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render
 
-from user_profile.forms import RegistrationForm, AddVoteForm
-from user_profile.models import Vote
+from user_profile.forms import RegistrationForm, AddVoteForm, CreateReportForm
+from user_profile.models import Vote, Report
 
 
 @login_required
@@ -20,7 +20,7 @@ def get_user_profile_page(request: HttpRequest):
 
 
 @login_required
-def change_user(request: HttpRequest): # change current user
+def change_user(request: HttpRequest):  # change current user
     # noinspection PyTypeHints
     request.user: AbstractUser
 
@@ -37,7 +37,7 @@ def change_user(request: HttpRequest): # change current user
     return render(request, "registration/change_user.html", context)
 
 
-def register_user(request: HttpRequest): # register new user
+def register_user(request: HttpRequest):  # register new user
     context = dict(
         form=RegistrationForm(request.POST)
     )
@@ -55,6 +55,7 @@ def register_user(request: HttpRequest): # register new user
 
 def change_vote(request: HttpRequest):
     context = dict(
+        # TODO: Refactor-щик вынеси if в отдельную функцию.
         form=AddVoteForm(request.POST if request.method == "POST" else None),
         old_theme=request.POST.get("old_theme") if request.method == "POST" else request.GET.get("old_theme")
     )
@@ -68,3 +69,24 @@ def change_vote(request: HttpRequest):
             vote.save()
             return HttpResponseRedirect("/show/")
     return render(request, "edit.html", context)
+
+
+@login_required
+def create_report(request: HttpRequest):
+    # noinspection PyTypeHints
+    request.user: AbstractUser
+
+    context = dict(
+        # TODO: Refactor-щик вынеси if в отдельную функцию.
+        form=CreateReportForm(request.POST if request.method == "POST" else None),
+        vote_theme=request.GET.get("vote_theme") if request.method == "GET" else request.POST.get("vote_theme")
+    )
+    if context['vote_theme'] is None:
+        return HttpResponseBadRequest()
+    if context['form'].is_valid():
+        report = Report(author=request.user,
+                        theme=context['form'].cleaned_data['theme'],
+                        content=context['form'].cleaned_data['content'])
+        report.save()
+        return HttpResponseRedirect("/show/")
+    return render(request, "vote_report/create.html", context)

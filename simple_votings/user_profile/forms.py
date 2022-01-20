@@ -7,24 +7,22 @@ from django.forms import EmailInput, TextInput, PasswordInput
 from django.http import QueryDict
 
 
-
 class DescForm(forms.Form):
     CHOICES = [
         ('1', 'YES'), ('2', 'NO')
-    ]  # Vlastelin a.k.a kotuk: тот кто теперь должен делать подсчет, в бд хранится номер варианта ответа yes - 1, no - 2
-       # gospodin:      но почему не 0 и 1 ?
+    ]
+    # Vlastelin a.k.a kotuk: тот кто теперь должен делать подсчет, в бд хранится номер варианта ответа yes - 1, no - 2
+    # gospodin: но почему не 0 и 1 ?
     choice_field = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
 
 
-
-class AddVoteForm(forms.Form): # add new vote
+class AddVoteForm(forms.Form):  # add new vote
     theme = forms.CharField(label="Название")
     description = forms.CharField(label="Описание")
     answers = forms.CharField(label="Введите варианты ответов, разделяя их знаком ; ")
 
 
-
-class RegistrationForm(forms.Form): # register
+class RegistrationForm(forms.Form):  # register
     username = UsernameField(widget=TextInput(attrs={'autofocus': True}))
     password = forms.CharField(
         label=gettext("Password"),
@@ -51,7 +49,9 @@ class RegistrationForm(forms.Form): # register
                 "username",
                 self.error_messages['already_exists']
             )
-        return result and username is not None and username and password is not None and email is not None and \
+            result = False
+        return \
+            result and username is not None and username and password is not None and email is not None and \
             password and email
 
     def __init__(self, data: QueryDict, exclude_users=None, *args, **kwargs):
@@ -60,3 +60,8 @@ class RegistrationForm(forms.Form): # register
             exclude_users = []
         self.data = data
         self.exclude_users = exclude_users
+
+
+class CreateReportForm(forms.Form):
+    theme = forms.CharField()
+    content = forms.CharField()
