@@ -1,8 +1,17 @@
 {% extends "../base.html" %}
 
 {% block content %}
-<p>Здесь должен быть макет профиля</p>
-<a href="/auth/logout">Выйти</a>
-<a href="/auth/change">Поменять профиль</a>
+
+<span><a href="/auth/logout">Выйти</a> | </span>
+<span><a href="/auth/change">Поменять профиль</a> | </span>
 <a href="/accounts/profile/statistic">Статистика</a>
+
+<hr>
+
+<span>Имя: {{name}}</span>
+<br>
+<span>Дата регистрации: {{date_joined}}</span>
+<br>
+<span>Дата последнего входа: {{last_login}}</span>
+
 {% endblock %}
