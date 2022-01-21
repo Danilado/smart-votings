@@ -17,6 +17,8 @@ urlpatterns = [
     path("vote/report", create_report),
     path("get_vote_list/", vote_list),
     path("list/", user_friendly_vote_list),
+    path("accounts/profile/statistic", profile_statistic),
+    path("vote_result", vote_result),
 ]
 
 urlpatterns += staticfiles_urlpatterns()
