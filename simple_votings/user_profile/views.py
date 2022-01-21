@@ -14,9 +14,14 @@ def get_user_profile_page(request: HttpRequest):
     # noinspection PyTypeHints
     request.user: AbstractUser
 
+    context = {
+        'name': request.user.username,
+        'date_joined': formate_date(request.user.date_joined),
+        'last_login': formate_date(request.user.last_login)
+    }
     print(request.user)
 
-    return render(request, "accounts/profile.html")
+    return render(request, "accounts/profile.html", context)
 
 
 @login_required
