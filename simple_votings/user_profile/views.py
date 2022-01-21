@@ -72,13 +72,21 @@ def change_vote(request: HttpRequest):
 
 
 @login_required
+def create_report_form(request):
+    if request.method == "POST":
+        return request.POST
+    else:
+        return None
+
+
+@login_required
 def create_report(request: HttpRequest):
     # noinspection PyTypeHints
     request.user: AbstractUser
 
     context = dict(
         # TODO: Refactor-щик вынеси if в отдельную функцию.
-        form=CreateReportForm(request.POST if request.method == "POST" else None),
+        form=CreateReportForm(create_report_form(request)),
         vote_theme=request.GET.get("vote_theme") if request.method == "GET" else request.POST.get("vote_theme")
     )
     if context['vote_theme'] is None:
