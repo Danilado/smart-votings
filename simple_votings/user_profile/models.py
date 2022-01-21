@@ -1,20 +1,20 @@
 from django.contrib.auth import get_user_model
+from django.contrib.auth.models import User
 from django.db import models
 
 from base import BaseModel
-
-
-class UserVote(BaseModel):  # голос пользователя
-    description = models.TextField()
-    answer1 = models.TextField()
-    answer2 = models.TextField()
-    result = models.TextField()
 
 
 class Vote(BaseModel):  # голосование
     theme = models.TextField()
     description = models.TextField()
     answers = models.TextField()
+
+
+class UserVote(BaseModel): # голос пользователя
+    vote=models.ForeignKey(to=Vote, on_delete=models.CASCADE)
+    results = models.TextField()
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
 
 
 class Report(BaseModel):
