@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Результаты</title>
+</head>
+<body>
+    <h1>Тема голосования:{{ vote.theme }}</h1>
+    <hr>
+    <h3>Описание:{{ vote.description }}</h3>
+    <hr>
+    {% csrf_token %}
+    <h5>Результаты</h5>
+    {% for i, k in ans.items %}
+        {{ i }} - {{ k }}%
+        <br>
+    {% endfor %}
+    <hr>
+    <hr>
+</body>
+</html>
