@@ -79,6 +79,14 @@ def create_report_form(request):
 
 
 @login_required
+def request_type_get(request):
+    if request.method == "GET":
+        return request.GET.get("vote_theme")
+    else:
+        return request.POST.get("vote_theme")
+
+
+@login_required
 def create_report(request: HttpRequest):
     # noinspection PyTypeHints
     request.user: AbstractUser
@@ -86,7 +94,7 @@ def create_report(request: HttpRequest):
     context = dict(
         # TODO: Refactor-щик вынеси if в отдельную функцию.
         form=CreateReportForm(create_report_form(request)),
-        vote_theme=request.GET.get("vote_theme") if request.method == "GET" else request.POST.get("vote_theme")
+        vote_theme=request_type_get(request)
     )
     if context['vote_theme'] is None:
         return HttpResponseBadRequest()
