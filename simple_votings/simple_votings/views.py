@@ -2,7 +2,7 @@ from typing import Optional
 
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AbstractUser, User
-from django.http import HttpRequest, HttpResponseRedirect
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from user_profile.forms import AddVoteForm
@@ -10,8 +10,22 @@ from user_profile.forms import DescForm
 from user_profile.models import UserVote
 from user_profile.models import Vote
 
-def super_voleyball(request: HttpRequest):
+def super_voleyball(request: HttpRequest):  
     return render(request, 'whatever/tmp_index.html')
+
+
+def vote_list(request: HttpRequest):        # Рубрика очумелые ручки
+    buffer = []
+    for item in Vote.objects.all():         # Вот не нравится мне это всё, но так плевать....
+        buffer.append([item.theme, item.description, item.answers.split(";")]) 
+    buffer = str(buffer).replace("'", '"')  # Нелегальная херотень
+    return HttpResponse(buffer)
+
+
+def user_friendly_vote_list(request: HttpRequest):
+    return render(request, 'list.html')
+    
+
 
 def description_vote(request: HttpRequest): # votings description
     context = {}

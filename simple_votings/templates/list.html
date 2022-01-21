@@ -1,0 +1,30 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Список голосований</title>
+    <link rel="stylesheet" href="{% static 'polllist/style.css' %}" />
+  </head>
+  <body>
+    <menu>
+      <a href="../" class="back">Назад</a>
+      <header>СПИСОК ГОЛОСОВАНИЙ</header>
+      <search>
+        <input type="text" name="" id="" class="search" />
+        <button class="search">&#x1F50D;</button>
+      </search>
+    </menu>
+    <!-- Окей, меню это хорошо, но я уже устал делать эту фигню, поэтому я, наверное, не
+    буду оптимизировать её под смартфоны -->
+    <div class="placeholder"></div>
+    <section class="content">
+      <div class="loading">Загружаю.</div>
+    </section>
+    <script src="{% static 'modules/anime.js' %}"></script>
+    <script src="{% static 'modules/triggers.js' %}"></script>
+    <script src="{% static 'polllist/main.js' %}"></script>
+  </body>
+</html>
