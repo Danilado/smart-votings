@@ -92,7 +92,6 @@ def create_report(request: HttpRequest):
     request.user: AbstractUser
 
     context = dict(
-        # TODO: Refactor-щик вынеси if в отдельную функцию.
         form=CreateReportForm(create_report_form(request)),
         vote_theme=request_type_get(request)
     )
