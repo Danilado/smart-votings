@@ -60,12 +60,6 @@ def add_new_vote(request: HttpRequest): # new voting
 def profile_statistic(request: HttpRequest):
     context = {}
     current_user = request.user
-    #---------------------------добавление в бд
-    #new_vote = Vote(id=99, theme="Hello", description='BdsgaB', answers="a;b;c;f")
-    #new_vote.save()
-    #record = UserVote(vote=new_vote, results='c;b', user = current_user)
-    #record.save()
-    #---------------------------
     context['user'] = current_user
     time_online = datetime.datetime.now().replace(tzinfo=None) - current_user.last_login.replace(tzinfo=None)
     context['time_online_hour'] = time_online
@@ -86,7 +80,7 @@ def vote_result(request: HttpRequest):
     context['vote'] = data[0].vote
     ans = {}
 
-    for item in data[0].vote.answers:
+    for item in data[0].vote.answers.split(";"):
         ans.update({item: 0})
 
     users_count = 0

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Результаты</title>
 </head>
 <body>
     <h1>Тема голосования:{{ vote.theme }}</h1>
@@ -12,11 +12,8 @@
     {% csrf_token %}
     <h5>Результаты</h5>
     {% for i, k in ans.items %}
-        {% if i == ';' %}
-        {% else %}
         {{ i }} - {{ k }}%
         <br>
-        {% endif %}
     {% endfor %}
     <hr>
     <hr>
