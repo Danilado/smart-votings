@@ -34,13 +34,13 @@ def description_vote(request: HttpRequest): # votings description
     context['id'] = user_id
     context['form'] = form
 
-    return render(request, "description_vote.html", context)
+    return render(request, "voting/description_vote.html", context)
 
 
 def show_all(request: HttpRequest): # all votings
     all_data = Vote.objects.all()
     context = {'data': all_data}
-    return render(request, "all.html", context)
+    return render(request, "voting/all.html", context)
 
 
 def add_new_vote(request: HttpRequest): # new voting
@@ -53,7 +53,7 @@ def add_new_vote(request: HttpRequest): # new voting
         record = Vote(theme=theme, description=description, answers=answers)
         record.save()
     context['form'] = form
-    return render(request, "add.html", context)
+    return render(request, "voting/add.html", context)
 
 
 @login_required
@@ -98,4 +98,4 @@ def vote_result(request: HttpRequest):
         ans.update({k: ans.get(k) / users_count * 100})
 
     context['ans'] = ans
-    return render(request, "vote_result.html", context)
+    return render(request, "voting/vote_result.html", context)
