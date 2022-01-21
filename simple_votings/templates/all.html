@@ -7,15 +7,15 @@
 <body>
     <hr>
     <hr>
-    {% for item in data %} <!-- TODO: Refactor-щик переименуй item в другое подходящее название, например vote -->
-        <h1>Тема голосования:{{ item.theme }}</h1>
+    {% for vote in data %} 
+        <h1>Тема голосования:{{ vote.theme }}</h1>
         <hr>
-        <h3>Описание:{{ item.description }}</h3>
+        <h3>Описание:{{ vote.description }}</h3>
         <hr>
         <form action="/description/" method="post">
             {% csrf_token %}
             <h5>Варианты ответов</h5>
-            {% for i in item.answers %}
+            {% for i in vote.answers %}
                 {% if i == ';' %}
                 <br>
                 <br>
@@ -26,11 +26,11 @@
         </form>
         <hr>
         <form action="/edit/" method="get">
-            <input type="hidden" name="old_theme" value="{{ item.theme }}">
+            <input type="hidden" name="old_theme" value="{{ vote.theme }}">
             <input type="submit" value="Изменить">
         </form>
         <form action="/vote/report" method="get">
-            <input type="hidden" name="vote_theme" value="{{ item.theme }}">
+            <input type="hidden" name="vote_theme" value="{{ vote.theme }}">
             <input type="submit" value="Пожаловаться">
         </form>
         <hr>
