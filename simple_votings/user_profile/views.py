@@ -67,7 +67,7 @@ def change_vote(request: HttpRequest):
             vote.answers = context['form'].cleaned_data.get('answers')
             vote.save()
             return HttpResponseRedirect("/show/")
-    return render(request, "edit.html", context)
+    return render(request, "voting/edit.html", context)
 
 
 @login_required
