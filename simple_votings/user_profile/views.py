@@ -55,7 +55,6 @@ def register_user(request: HttpRequest):  # register new user
 
 def change_vote(request: HttpRequest):
     context = dict(
-        # TODO: Refactor-щик вынеси if в отдельную функцию.
         form=AddVoteForm(request.POST if request.method == "POST" else None),
         old_theme=request.POST.get("old_theme") if request.method == "POST" else request.GET.get("old_theme")
     )
