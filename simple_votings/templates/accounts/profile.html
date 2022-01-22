@@ -2,12 +2,12 @@
 
 {% block content %}
 <p>Здесь должен быть макет профиля</p>
-<a href="/auth/logout">Выйти</a>
-<a href="/auth/change">Поменять профиль</a>
-<a href="/accounts/profile/statistic">Статистика</a>
-<a href="/show/">Список голосований</a>
-<a href="/add/">Создать новое голосование</a>
+<a href="{% url 'logout' %}">Выйти</a>
+<a href="{% url 'change_user' %}">Поменять профиль</a>
+<a href="{% url 'profile_statistic' %}">Статистика</a>
+<a href="{% url 'list_votings' %}">Список голосований</a>
+<a href="{% url 'add_vote' %}">Создать новое голосование</a>
 {% if is_moderator %}
-    <a href="/vote/report/table">Репорты голосований</a>
+    <a href="{% url 'report_list' %}">Репорты голосований</a>
 {% endif %}
 {% endblock %}

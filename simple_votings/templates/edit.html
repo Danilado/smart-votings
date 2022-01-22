@@ -1,10 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
     <title>Редактирование голосования {{ old_theme }}</title>
-</head>
-<body>
+{% endblock %}
+{% block content %}
     {% if form.errors and form %}
         {% for field in form %}
             {% for error in field.errors %}
@@ -18,5 +18,4 @@
         {{ form }}
         <input type="submit" value="Изменить">
     </form>
-</body>
-</html>
+{% endblock %}

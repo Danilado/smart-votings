@@ -1,14 +1,11 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+{% block head %}
     <title>Список голосований</title>
     <link rel="stylesheet" href="{% static 'polllist/style.css' %}" />
-  </head>
-  <body>
+{% endblock %}
+{% block content %}
     <menu>
       <a href="../" class="back">Назад</a>
       <header>СПИСОК ГОЛОСОВАНИЙ</header>
@@ -26,5 +23,4 @@
     <script src="{% static 'modules/anime.js' %}"></script>
     <script src="{% static 'modules/triggers.js' %}"></script>
     <script src="{% static 'polllist/main.js' %}"></script>
-  </body>
-</html>
+{% endblock %}

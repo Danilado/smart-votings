@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import AbstractUser, User, Group, PermissionsMixin, AnonymousUser
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render
+from django.urls import reverse
 
 from user_profile.forms import RegistrationForm, AddVoteForm, CreateReportForm
 from user_profile.models import Vote, Report
@@ -11,6 +12,10 @@ from user_profile.models import Vote, Report
 
 def is_moderator(user: Union[PermissionsMixin, AnonymousUser]) -> bool:
     return user.groups.filter(name="Moderator").first() is not None
+
+
+def post_or_none(request: HttpRequest):
+    return request.POST if request.method == "POST" else None
 
 
 @permission_required("auth.view_user")
@@ -32,13 +37,13 @@ def change_user(request: HttpRequest):  # change current user
         request.user.set_password(context['form'].cleaned_data.get("password", request.user.password))
         request.user.email = context['form'].cleaned_data.get("email", request.user.email)
         request.user.save()
-        return HttpResponseRedirect("/auth/login")
+        return HttpResponseRedirect(reverse("login"))
     return render(request, "registration/change_user.html", context)
 
 
 def register_user(request: HttpRequest):  # register new user
     context = dict(
-        form=RegistrationForm(request.POST)
+        form=RegistrationForm(None, request.POST)
     )
     if len(request.POST) > 3:
         if context['form'].is_valid() and not context['form'].errors:
@@ -48,7 +53,7 @@ def register_user(request: HttpRequest):  # register new user
                 context['form'].cleaned_data.get('password'))
             new_user.groups.add(Group.objects.filter(name="Normal user").first())
             new_user.save()
-            return HttpResponseRedirect('/auth/login')
+            return HttpResponseRedirect(reverse("login"))
     register_page_render = render(request, "registration/register.html", context=context)
     return register_page_render
 
@@ -57,8 +62,7 @@ def register_user(request: HttpRequest):  # register new user
 @login_required
 def change_vote(request: HttpRequest):
     context = dict(
-        # TODO: Refactor-щик вынеси if в отдельную функцию.
-        form=AddVoteForm(request.POST if request.method == "POST" else None),
+        form=AddVoteForm(post_or_none(request)),
         old_theme=request.POST.get("old_theme") if request.method == "POST" else request.GET.get("old_theme")
     )
     if context['form'].is_valid() and not context['form'].errors:
@@ -69,7 +73,7 @@ def change_vote(request: HttpRequest):
             vote.description = context['form'].cleaned_data.get('description')
             vote.answers = context['form'].cleaned_data.get('answers')
             vote.save()
-            return HttpResponseRedirect("/show/")
+            return HttpResponseRedirect(reverse("list_votings"))
     return render(request, "edit.html", context)
 
 
@@ -77,8 +81,7 @@ def change_vote(request: HttpRequest):
 @login_required
 def create_report(request: HttpRequest):
     context = dict(
-        # TODO: Refactor-щик вынеси if в отдельную функцию.
-        form=CreateReportForm(request.POST if request.method == "POST" else None),
+        form=CreateReportForm(post_or_none(request)),
         id=request.GET.get("id") if request.method == "GET" else request.POST.get("id")
     )
     context['vote'] = Vote.objects.filter(id=context['id']).first()
@@ -90,7 +93,7 @@ def create_report(request: HttpRequest):
                         content=context['form'].cleaned_data['content'],
                         vote=context['vote'])
         report.save()
-        return HttpResponseRedirect("/show/")
+        return HttpResponseRedirect(reverse("list_votings"))
     return render(request, "vote_report/create.html", context)
 
 
@@ -109,7 +112,7 @@ def delete_vote(request: HttpRequest):
     if not valid_request:
         return HttpResponseBadRequest()
     vote.delete()
-    return HttpResponseRedirect("/show/")
+    return HttpResponseRedirect(reverse("list_votings"))
 
 
 @permission_required("user_profile.delete_report")
@@ -120,4 +123,4 @@ def delete_report(request: HttpRequest):
     if not valid_request:
         return HttpResponseBadRequest()
     report.delete()
-    return HttpResponseRedirect("/vote/report/table")
+    return HttpResponseRedirect(reverse("report_list"))

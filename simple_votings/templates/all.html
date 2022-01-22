@@ -1,21 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "base.html" %}
+
+{% block head %}
     <title>description_vote</title>
-</head>
+{% endblock %}
+{% block content %}
 <body>
     <hr>
     <hr>
-    {% for item in data %} <!-- TODO: Refactor-щик переименуй item в другое подходящее название, например vote -->
-        <h1>Тема голосования:{{ item.theme }}</h1>
+    {% for vote in data %}
+        <h1>Тема голосования:{{ vote.theme }}</h1>
         <hr>
-        <h3>Описание:{{ item.description }}</h3>
+        <h3>Описание:{{ vote.description }}</h3>
         <hr>
-        <form action="/description/" method="post">
+        <form action="{% url 'description' %}" method="post">
             {% csrf_token %}
             <h5>Варианты ответов</h5>
-            {% for i in item.answers %}
+            {% for i in vote.answers %}
                 {% if i == ';' %}
                 <br>
                 <br>
@@ -25,22 +25,21 @@
             {% endfor %}
         </form>
         <hr>
-        <form action="/edit/" method="get">
-            <input type="hidden" name="old_theme" value="{{ item.theme }}">
+        <form action="{% url 'change_vote' %}" method="get">
+            <input type="hidden" name="old_theme" value="{{ vote.theme }}">
             <input type="submit" value="Изменить">
         </form>
-        <form action="/vote/report/create" method="get">
-            <input type="hidden" name="id" value="{{ item.id }}">
+        <form action="{% url 'create_report' %}" method="get">
+            <input type="hidden" name="id" value="{{ vote.id }}">
             <input type="submit" value="Пожаловаться">
         </form>
         {% if is_moderator %}
-        <form action="/vote/delete" method="post">
+        <form action="{% url 'delete_vote' %}" method="post">
             {% csrf_token %}
-            <input type="hidden" name="id" value="{{ item.id }}">
+            <input type="hidden" name="id" value="{{ vote.id }}">
             <input type="submit" value="Удалить">
         </form>
         {% endif %}
         <hr>
     {% endfor %}
-</body>
-</html>
+{% endblock %}

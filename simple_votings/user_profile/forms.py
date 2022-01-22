@@ -4,7 +4,6 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UsernameField
 from django.forms import EmailInput, TextInput, PasswordInput
-from django.http import QueryDict
 
 
 class DescForm(forms.Form):
@@ -41,24 +40,25 @@ class RegistrationForm(forms.Form):  # register
 
     def is_valid(self):
         result = super().is_valid()
-        username = self.cleaned_data.get('username')
-        password = self.cleaned_data.get('password')
-        email = self.cleaned_data.get('email')
-        if username not in self.exclude_users and get_user_model().objects.filter(username=username).first():
-            self.add_error(
-                "username",
-                self.error_messages['already_exists']
-            )
-            result = False
-        return \
-            result and username is not None and username and password is not None and email is not None and \
-            password and email
+        if result:
+            username = self.cleaned_data.get('username')
+            password = self.cleaned_data.get('password')
+            email = self.cleaned_data.get('email')
+            if username not in self.exclude_users and get_user_model().objects.filter(username=username).first():
+                self.add_error(
+                    "username",
+                    self.error_messages['already_exists']
+                )
+                result = False
+            result = \
+                result and username is not None and username and password is not None and email is not None and \
+                password and email
+        return result
 
-    def __init__(self, data: QueryDict, exclude_users=None, *args, **kwargs):
-        super().__init__(data, *args, **kwargs)
+    def __init__(self, exclude_users=None, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         if exclude_users is None:
             exclude_users = []
-        self.data = data
         self.exclude_users = exclude_users
 
 
