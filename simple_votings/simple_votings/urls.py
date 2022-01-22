@@ -14,11 +14,14 @@ urlpatterns = [
     path("show/", show_all),  # all votings
     path("add/", add_new_vote),  # new vote page
     path("edit/", change_vote),
-    path("vote/report", create_report),
     path("get_vote_list/", vote_list),
     path("list/", user_friendly_vote_list),
     path("accounts/profile/statistic", profile_statistic),
     path("vote_result", vote_result),
+    path("vote/delete", delete_vote),
+    path("vote/report/create", create_report),
+    path("vote/report/table", report_table),
+    path("vote/report/delete", delete_report),
 ]
 
 urlpatterns += staticfiles_urlpatterns()

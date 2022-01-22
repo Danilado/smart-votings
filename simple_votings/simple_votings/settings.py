@@ -14,6 +14,8 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
+from django.urls import reverse_lazy
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 
@@ -138,6 +140,8 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Настройки аутентификации
 LOGIN_REDIRECT_URL = "/accounts/profile"
+LOGIN_URL = reverse_lazy('login')  # Django ты будешь использовать этот параметр, а не LOGIN_REDIRECT_URL, конечно же!
+# Почему? а хер его знает!
 
 # Настройки почты
 EMAIL_USE_TLS = True

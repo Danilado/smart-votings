@@ -20,3 +20,4 @@ class Report(BaseModel):
     author = models.ForeignKey(get_user_model(), models.CASCADE)
     theme = models.TextField()
     content = models.TextField()
+    vote = models.ForeignKey(Vote, models.CASCADE)

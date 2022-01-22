@@ -1,16 +1,17 @@
 import datetime
 
-from typing import Optional
-
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import AbstractUser, User
 from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
+from django.contrib.auth.decorators import permission_required
 from django.shortcuts import render
 
 from user_profile.forms import AddVoteForm
 from user_profile.forms import DescForm
 from user_profile.models import UserVote
 from user_profile.models import Vote
+from user_profile.views import is_moderator
+
 
 def super_voleyball(request: HttpRequest):  
     return render(request, 'whatever/tmp_index.html')
@@ -28,8 +29,8 @@ def user_friendly_vote_list(request: HttpRequest):
     return render(request, 'list.html')
     
 
-
-def description_vote(request: HttpRequest): # votings description
+@permission_required("user_profile.add_uservote")
+def description_vote(request: HttpRequest):  # votings description
     context = {}
     description = "None"
     answer1 = "YES"
@@ -42,7 +43,7 @@ def description_vote(request: HttpRequest): # votings description
         record.save()
         context['form'] = form
 
-    all_data = UserVote.objects.all() 
+    all_data = UserVote.objects.all()
 
     context['data'] = all_data
     context['id'] = user_id
@@ -51,13 +52,16 @@ def description_vote(request: HttpRequest): # votings description
     return render(request, "description_vote.html", context)
 
 
-def show_all(request: HttpRequest): # all votings
+@permission_required("user_profile.view_vote")
+def show_all(request: HttpRequest):  # all votings
     all_data = Vote.objects.all()
-    context = {'data': all_data}
+    context = {'data': all_data,
+               "is_moderator": is_moderator(request.user)}
     return render(request, "all.html", context)
 
 
-def add_new_vote(request: HttpRequest): # new voting
+@permission_required("user_profile.add_vote")
+def add_new_vote(request: HttpRequest):  # new voting
     context = {}
     form = AddVoteForm(request.POST if request.method == "POST" else None)
     if request.method == "POST":
