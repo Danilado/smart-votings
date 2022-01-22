@@ -4,6 +4,10 @@
 
 <span><a href="/auth/logout">Выйти</a> | </span>
 <span><a href="/auth/change">Поменять профиль</a> | </span>
+<span><a href="/add/">Создать новое голосование</a> | </span>
+{% if is_moderator %}
+    <span><a href="/vote/report/table">Репорты голосований</a> | </span>
+{% endif %}
 <a href="/accounts/profile/statistic">Статистика</a>
 
 <hr>
