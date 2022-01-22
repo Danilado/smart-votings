@@ -4,6 +4,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.contrib.auth.models import AbstractUser, User, Group, PermissionsMixin, AnonymousUser
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render
+from django.urls import reverse
 
 from user_profile.forms import RegistrationForm, AddVoteForm, CreateReportForm
 from user_profile.models import Vote, Report
@@ -38,7 +39,7 @@ def change_user(request: HttpRequest):  # change current user
 
 def register_user(request: HttpRequest):  # register new user
     context = dict(
-        form=RegistrationForm(request.POST)
+        form=RegistrationForm(None, request.POST)
     )
     if len(request.POST) > 3:
         if context['form'].is_valid() and not context['form'].errors:
@@ -48,7 +49,7 @@ def register_user(request: HttpRequest):  # register new user
                 context['form'].cleaned_data.get('password'))
             new_user.groups.add(Group.objects.filter(name="Normal user").first())
             new_user.save()
-            return HttpResponseRedirect('/auth/login')
+            return HttpResponseRedirect(reverse("login"))
     register_page_render = render(request, "registration/register.html", context=context)
     return register_page_render
 
@@ -69,7 +70,7 @@ def change_vote(request: HttpRequest):
             vote.description = context['form'].cleaned_data.get('description')
             vote.answers = context['form'].cleaned_data.get('answers')
             vote.save()
-            return HttpResponseRedirect("/show/")
+            return HttpResponseRedirect(reverse("list_votings"))
     return render(request, "edit.html", context)
 
 
@@ -90,7 +91,7 @@ def create_report(request: HttpRequest):
                         content=context['form'].cleaned_data['content'],
                         vote=context['vote'])
         report.save()
-        return HttpResponseRedirect("/show/")
+        return HttpResponseRedirect(reverse("list_votings"))
     return render(request, "vote_report/create.html", context)
 
 
@@ -109,7 +110,7 @@ def delete_vote(request: HttpRequest):
     if not valid_request:
         return HttpResponseBadRequest()
     vote.delete()
-    return HttpResponseRedirect("/show/")
+    return HttpResponseRedirect(reverse("list_votings"))
 
 
 @permission_required("user_profile.delete_report")

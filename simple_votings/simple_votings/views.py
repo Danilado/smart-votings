@@ -1,9 +1,8 @@
 import datetime
 
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import AbstractUser, User
-from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.contrib.auth.decorators import permission_required
+from django.http import HttpRequest, HttpResponse
 from django.shortcuts import render
 
 from user_profile.forms import AddVoteForm
@@ -17,10 +16,10 @@ def super_voleyball(request: HttpRequest):
     return render(request, 'whatever/tmp_index.html')
 
 
-def vote_list(request: HttpRequest):        # Рубрика очумелые ручки
+def vote_list(request: HttpRequest):        # Рубрика очумелые ручки TODO
     buffer = []
     for item in Vote.objects.all():         # Вот не нравится мне это всё, но так плевать....
-        buffer.append([item.theme, item.description, item.answers.split(";")]) 
+        buffer.append([item.theme, item.description, item.answers.split(";")])
     buffer = str(buffer).replace("'", '"')  # Нелегальная херотень
     return HttpResponse(buffer)
 
@@ -64,10 +63,10 @@ def show_all(request: HttpRequest):  # all votings
 def add_new_vote(request: HttpRequest):  # new voting
     context = {}
     form = AddVoteForm(request.POST if request.method == "POST" else None)
-    if request.method == "POST":
-        theme = form.data["theme"]
-        description = form.data["description"]
-        answers = form.data["answers"]
+    if request.method == "POST" and form.is_valid():
+        theme = form.cleaned_data["theme"]
+        description = form.cleaned_data["description"]
+        answers = form.cleaned_data["answers"]
         record = Vote(theme=theme, description=description, answers=answers)
         record.save()
     context['form'] = form
