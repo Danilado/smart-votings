@@ -24,7 +24,6 @@ def vote_list(request: HttpRequest):        # Рубрика очумелые р
 
 def user_friendly_vote_list(request: HttpRequest):
     return render(request, 'list.html')
-    
 
 
 def description_vote(request: HttpRequest): # votings description
