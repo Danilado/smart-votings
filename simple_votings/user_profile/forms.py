@@ -55,11 +55,11 @@ class RegistrationForm(forms.Form):  # register
                 password and email
         return result
 
-    def __init__(self, exclude_users=None, *args, **kwargs):
+    def __init__(self, *args, **kwargs):
+        self.exclude_users = kwargs.get("exclude_users", [])
+        if "exclude_users" in kwargs:
+            del kwargs["exclude_users"]
         super().__init__(*args, **kwargs)
-        if exclude_users is None:
-            exclude_users = []
-        self.exclude_users = exclude_users
 
 
 class CreateReportForm(forms.Form):

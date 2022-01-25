@@ -1,7 +1,8 @@
 from typing import Optional, Union
 
+from django.contrib.auth import get_user_model
 from django.contrib.auth.decorators import login_required, permission_required
-from django.contrib.auth.models import AbstractUser, User, Group, PermissionsMixin, AnonymousUser
+from django.contrib.auth.models import AbstractUser, Group, PermissionsMixin, AnonymousUser
 from django.http import HttpRequest, HttpResponseRedirect, HttpResponseBadRequest
 from django.shortcuts import render
 from django.urls import reverse
@@ -29,8 +30,14 @@ def get_user_profile_page(request: HttpRequest):
 @login_required
 def change_user(request: HttpRequest):  # change current user
     context = dict(
-        form=RegistrationForm(request.POST, [request.user.username])
+        form=RegistrationForm(
+            post_or_none(request), exclude_users=[request.user.username], initial={
+                "username": request.user.username,
+                "email": request.user.email
+            }
+        )
     )
+    print("\n".join(f"{field[0]}, {field[1].initial}" for field in context['form'].fields.items()))
     if len(request.POST) > 3 and context['form'].is_valid() and not context['form'].errors:
         print(request.POST)
         request.user.username = context['form'].cleaned_data.get("username", request.user.username)
@@ -43,11 +50,11 @@ def change_user(request: HttpRequest):  # change current user
 
 def register_user(request: HttpRequest):  # register new user
     context = dict(
-        form=RegistrationForm(None, request.POST)
+        form=RegistrationForm(request.POST)
     )
     if len(request.POST) > 3:
         if context['form'].is_valid() and not context['form'].errors:
-            new_user: Optional[AbstractUser] = User.objects.create_user(
+            new_user: Optional[AbstractUser] = get_user_model().objects.create_user(
                 context['form'].cleaned_data.get('username'),
                 context['form'].cleaned_data.get('email'),
                 context['form'].cleaned_data.get('password'))
@@ -74,7 +81,7 @@ def change_vote(request: HttpRequest):
             vote.answers = context['form'].cleaned_data.get('answers')
             vote.save()
             return HttpResponseRedirect(reverse("list_votings"))
-    return render(request, "edit.html", context)
+    return render(request, "votes/edit.html", context)
 
 
 @permission_required("user_profile.add_report")
@@ -94,14 +101,14 @@ def create_report(request: HttpRequest):
                         vote=context['vote'])
         report.save()
         return HttpResponseRedirect(reverse("list_votings"))
-    return render(request, "vote_report/create.html", context)
+    return render(request, "votes/report/create.html", context)
 
 
 @permission_required("user_profile.view_report")
 @login_required
-def report_table(request: HttpRequest):
+def reports_list(request: HttpRequest):
     context = {"reports": Report.objects.all()}
-    return render(request, "vote_report/reports_table.html", context)
+    return render(request, "votes/report/list.html", context)
 
 
 @permission_required("user_profile.delete_vote")

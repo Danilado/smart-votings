@@ -26,7 +26,7 @@ def vote_list(request: HttpRequest):
 
 
 def user_friendly_vote_list(request: HttpRequest):
-    return render(request, 'list.html')
+    return render(request, 'votes/list.html')
     
 
 @permission_required("user_profile.add_uservote")
@@ -49,15 +49,15 @@ def description_vote(request: HttpRequest):  # votings description
     context['id'] = user_id
     context['form'] = form
 
-    return render(request, "description_vote.html", context)
+    return render(request, "votes/description_vote.html", context)
 
 
 @permission_required("user_profile.view_vote")
 def show_all(request: HttpRequest):  # all votings
-    all_data = Vote.objects.all()
-    context = {'data': all_data,
+    votes = Vote.objects.all()
+    context = {'votes': votes,
                "is_moderator": is_moderator(request.user)}
-    return render(request, "all.html", context)
+    return render(request, "votes/all.html", context)
 
 
 @permission_required("user_profile.add_vote")
@@ -71,7 +71,7 @@ def add_new_vote(request: HttpRequest):  # new voting
         record = Vote(theme=theme, description=description, answers=answers)
         record.save()
     context['form'] = form
-    return render(request, "add.html", context)
+    return render(request, "votes/add.html", context)
 
 
 @login_required
@@ -95,27 +95,21 @@ def profile_statistic(request: HttpRequest):
 @login_required
 def vote_result(request: HttpRequest):
     context = {}
-    data = UserVote.objects.filter(vote=99)
-    print(data)
-    context['vote'] = data[0].vote
-    ans = {}
-
-    for item in data[0].vote.answers.split(";"):
-        ans.update({item: 0})
+    user_votes = UserVote.objects.filter(vote=99)
+    print(user_votes)
+    context['vote'] = user_votes[0].vote
+    answers = {answer: 0 for answer in user_votes[0].vote.answers.split(";")}
 
     users_count = 0
 
-    for item in data:
+    for item in user_votes:
         results = item.results.split(";")
-        for el in results:
+        for result in results:
             users_count += 1
-            if ans.get(el) is None:
-                ans.update({el: 1})
-            else:
-                ans.update({el: ans.get(el) + 1})
+            answers.update({result: answers.get(result, 0) + 1})
 
-    for k, el in ans.items():
-        ans.update({k: ans.get(k) / users_count * 100})
+    for k, result in answers.items():
+        answers.update({k: answers.get(k) / users_count * 100})
 
-    context['ans'] = ans
-    return render(request, "vote_result.html", context)
+    context['answers'] = answers
+    return render(request, "votes/result.html", context)

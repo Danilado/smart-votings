@@ -11,7 +11,7 @@
     <hr>
     {% csrf_token %}
     <h5>Результаты</h5>
-    {% for i, k in ans.items %}
+    {% for i, k in answers.items %}
         {{ i }} - {{ k }}%
         <br>
     {% endfor %}

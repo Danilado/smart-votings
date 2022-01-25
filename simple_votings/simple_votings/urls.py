@@ -19,7 +19,7 @@ urlpatterns = [
     path("vote/list", user_friendly_vote_list, name="vote_list"),
     path("vote/report/create", create_report, name="create_report"),
     path("vote/report/delete", delete_report, name="delete_report"),
-    path("vote/report/table", report_table, name="report_list"),
+    path("vote/report/table", reports_list, name="report_list"),
     path("vote/show", show_all, name="list_votings"),  # all votings
     path("vote_result", vote_result, name="vote_result"),
 ]

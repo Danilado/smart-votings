@@ -6,7 +6,7 @@
     <link rel="stylesheet" href="{% static 'base/style.css' %}" />
 {% endblock %}
 {% block content %}
-    <form action={% url 'add_vote' %}" method="POST">
+    <form action="{% url 'add_vote' %}" method="POST">
       {% csrf_token %}
       <h3>Создать новое голосование</h3>
       <table>
