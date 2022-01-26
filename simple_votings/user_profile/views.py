@@ -18,8 +18,8 @@ def is_moderator(user: Union[PermissionsMixin, AnonymousUser]) -> bool:
 def get_user_profile_page(request: HttpRequest):
     context = {
         'name': request.user.username,
-        'date_joined': formate_date(request.user.date_joined),
-        'last_login': formate_date(request.user.last_login),
+        'date_joined': str(request.user.date_joined),
+        'last_login': str(request.user.last_login),
         "is_moderator": is_moderator(request.user)
     }
     print(request.user)
