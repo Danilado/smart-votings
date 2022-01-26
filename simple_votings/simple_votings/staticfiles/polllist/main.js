@@ -35,21 +35,36 @@ xhr.onerror = () => {
 };
 
 function createPlates(a) {
-  a.forEach((el) => {
+  for(j in a){
+    el = a[j]
     // [name, desc, [<votes>]]
     let p = document.createElement("div");
     p.classList.toggle("plate");
     why = "";
     for (i in el[2]) {
-      why += `<div class="vote">${el[2][i]}</div>`;
+      why += `<a href="../vote/submit?id=${+j+1}&choise=${+i+1}"><div class="vote">${el[2][i]}</div></a>`;
     }
     p.innerHTML += `
     <div class="column">
-    <h1>${el[0]}</h1>
-    <p>${el[1]}</p>
-    ${why}
+      <h1>${el[0]}</h1>
+      <p>${el[1]}</p>
+      ${why}
     </div>
-    <div class="exp">&bigtriangledown;</div>
+    <div class="vert">
+      <div class="exp">&bigtriangledown;</div>
+      <div class="bt">
+        <form action="/edit/" method="get">
+          <input type="hidden" name="old_theme" value="${el[0]}">
+          <input type="submit" value="✏️">
+        </form>
+      </div>
+      <div class="bt">
+        <form action="/vote/report/create" method="get">
+          <input type="hidden" name="id" value="${+j+1}">
+          <input type="submit" value="🚩">
+        </form>
+      </div>
+    </div>
     `;
     p.innerHTML += ``;
     sect.appendChild(p);
@@ -121,5 +136,5 @@ function createPlates(a) {
         });
       }
     });
-  });
+  };
 }

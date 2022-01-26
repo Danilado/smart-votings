@@ -15,7 +15,8 @@ urlpatterns = [
     path("add/", add_new_vote),  # new vote page
     path("edit/", change_vote),
     path("get_vote_list/", vote_list),
-    path("list/", user_friendly_vote_list),
+    path("vote/list", user_friendly_vote_list),
+    path("vote/submit", vote_n_goback),
     path("accounts/profile/statistic", profile_statistic),
     path("vote_result", vote_result),
     path("vote/delete", delete_vote),

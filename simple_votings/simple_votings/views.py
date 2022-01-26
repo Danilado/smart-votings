@@ -32,6 +32,14 @@ def user_friendly_vote_list(request: HttpRequest):
     
 
 @permission_required("user_profile.add_uservote")
+def vote_n_goback(request: HttpRequest):     # Gospodin: Я ваш родственник
+    id = request.GET.get('id')
+    var = request.GET.get('choise')
+    print(f'userid: {request.user.id} id: {id} choise: {var}')
+    return render(request, 'goback.html')
+
+
+@permission_required("user_profile.add_uservote")
 def description_vote(request: HttpRequest):  # votings description
     context = {}
     id = int(request.GET.get('id'))
