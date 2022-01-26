@@ -10,7 +10,7 @@
     <hr>
     <h3>Описание:{{ item.description }}</h3>
     <hr>
-    <form action="/description/", method="POST">
+    <form action="../description/?id={{ id }}", method="POST">
         {% csrf_token %}
         {% for radio in form %}
         {{ radio }}

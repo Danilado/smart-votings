@@ -8,7 +8,7 @@
     <hr>
     <hr>
     {% for item in data %} <!-- TODO: Refactor-щик переименуй item в другое подходящее название, например vote -->
-        <h1>Тема голосования:{{ item.theme }}</h1>
+    <a href="../description/?id={{ item.id }}"><h1>Тема голосования:{{ item.theme }}</h1></a>
         <hr>
         <h3>Описание:{{ item.description }}</h3>
         <hr>

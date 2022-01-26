@@ -11,9 +11,11 @@ from user_profile.forms import DescForm
 from user_profile.models import UserVote
 from user_profile.models import Vote
 from user_profile.views import is_moderator
+import simple_votings.choice as choice
 
 
-def super_voleyball(request: HttpRequest):  
+
+def super_voleyball(request: HttpRequest):
     return render(request, 'whatever/tmp_index.html')
 
 
@@ -32,21 +34,37 @@ def user_friendly_vote_list(request: HttpRequest):
 @permission_required("user_profile.add_uservote")
 def description_vote(request: HttpRequest):  # votings description
     context = {}
-    description = "None"
-    answer1 = "YES"
-    answer2 = "NO"
-    user_id = 2
+    id = int(request.GET.get('id'))
+    all_data = Vote.objects.all()
+    choice.choises = []
+    v = []
+    for item in all_data:
+        if item.id == id:
+            v = item
+            count = 0
+            for i in item.answers.split(";"):
+                choice.choises.append((count, i))
+                count += 1
+            description = item.description
+    print(choice.choises, end="\nend\n")
+    form = DescForm(request.POST if request.method == "POST" else None)
+    print(form.CHOICES)
+    form.CHOICES = choice.choises
+    print(form.CHOICES)
+    form.CHOICES = [(0, '123'), (1, '321')]
     form = DescForm(request.POST if request.method == "POST" else None)
     if request.method == "POST":
+        print(choice.choises)
+        print("qwe")
         result = form.data["choice_field"]
-        record = UserVote(description=description, answer1=answer1, answer2=answer2, result=result)
+        record = UserVote(results=result)
         record.save()
         context['form'] = form
 
-    all_data = UserVote.objects.all()
+
 
     context['data'] = all_data
-    context['id'] = user_id
+    context['id'] = id
     context['form'] = form
 
     return render(request, "description_vote.html", context)
