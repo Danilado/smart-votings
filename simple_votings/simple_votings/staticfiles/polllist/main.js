@@ -20,7 +20,7 @@ window.addEventListener("scroll", function () {
 });
 
 let xhr = new XMLHttpRequest();
-xhr.open("GET", "../get_vote_list/", true);
+xhr.open("GET", "../api/get_vote_list", true); // TODO Сделать ссылку через {% url ... %}
 xhr.send();
 xhr.onload = () => {
   arr = JSON.parse(xhr.response);

@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
+    <title>description_vote</title>
+{% endblock %}
+{% block content %}
+    {% for user_vote in user_votes %}   <!-- TODO: performance issue.  -->
+    {% if user_vote.id == id %}
+    <h1>Тема голосования: {{ user_vote.theme }}</h1>
+    <hr>
+    <h3>Описание: {{ user_vote.description }}</h3>
+    <hr>
+    <form action="{% url 'description' %}" method="POST">
+        {% csrf_token %}
+        {% for radio in form %}
+        {{ radio }}
+        {% endfor %}
+        <input type="submit" value='Отправить'>
+    </form>
+    {% endif %}
+    {% endfor %}
+{% endblock %}

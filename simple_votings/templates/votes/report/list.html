@@ -1,4 +1,4 @@
-{% extends "../base.html" %}
+{% extends "../../base.html" %}
 
 {% block head %}
 <title>Жалоба на голосование {{ vote_theme }}</title>
@@ -13,7 +13,7 @@
 
     <p>ID голосования: {{ report.vote.id }}</p>
     <p>Тема голосования: {{ report.vote.theme }}</p>
-    <form action="/vote/report/delete" method="post">
+    <form action="{% url 'delete_report' %}" method="post">
         {% csrf_token %}
         <input type="hidden" name="id" value="{{ report.id }}">
         <input type="submit" value="Удалить">

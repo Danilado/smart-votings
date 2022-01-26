@@ -41,6 +41,7 @@ class UserProfileConfig(AppConfig):
             moderator_group.permissions.add(new_permission_for_registered_users_group)
 
     def ready(self):
+        super().ready()
         if 'runserver' in sys.argv:
             self._register_normal_user_group()
             self._register_moderator_user_group()
