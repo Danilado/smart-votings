@@ -43,9 +43,9 @@ def description_vote(request: HttpRequest):  # votings description
         record.save()
         context['form'] = form
 
-    all_data = UserVote.objects.all()
+    user_votes = UserVote.objects.all()
 
-    context['data'] = all_data
+    context['user_votes'] = user_votes
     context['id'] = user_id
     context['form'] = form
 
@@ -84,10 +84,10 @@ def profile_statistic(request: HttpRequest):
     time_online = datetime.datetime.now().replace(tzinfo=None) - current_user.last_login.replace(tzinfo=None)
     context['time_online_hour'] = time_online
     context['date_reg'] = current_user.date_joined
-    data = UserVote.objects.filter(user=current_user)
-    count_of_votes = len(data)
+    user_votes = UserVote.objects.filter(user=current_user)
+    count_of_votes = user_votes.count()
     context['count_of_votes'] = count_of_votes
-    context['data'] = data
+    context['user_votes'] = user_votes
 
     return render(request, "accounts/profile_statistic.html", context)
 
