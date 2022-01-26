@@ -1,22 +1,15 @@
 {% extends "../base.html" %} {% load static %}
-<!--  -->
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    {% block head %}
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Выход</title>
-    <link rel="stylesheet" href="{% static 'msgpage/style.css' %}" />
-    {% endblock %}
-  </head>
-  <body>
-    {% block content %}
-    <p>
-      Logged out!
-      <br />
-      <br />
-      <a href="{% url 'login'%}">Click here to login again.</a>
-    </p>
-    {% endblock %}
-  </body>
-</html>
+{% block head %}
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Выход</title>
+<link rel="stylesheet" href="{% static 'msgpage/style.css' %}" />
+{% endblock %}
+
+{% block content %}
+<p>
+  Logged out!
+  <br />
+  <br />
+  <a href="{% url 'login'%}">Click here to login again.</a>
+</p>
+{% endblock %}

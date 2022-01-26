@@ -10,8 +10,8 @@ class Vote(BaseModel):  # голосование
     answers = models.TextField()
 
 
-class UserVote(BaseModel): # голос пользователя
-    vote=models.ForeignKey(to=Vote, on_delete=models.CASCADE)
+class UserVote(BaseModel):  # голос пользователя
+    vote = models.ForeignKey(to=Vote, on_delete=models.CASCADE)
     results = models.TextField()
     user = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
 

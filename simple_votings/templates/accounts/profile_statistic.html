@@ -1,19 +1,19 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
+{% extends "base.html" %}
+{% load static %}
+
+{% block head %}
     <title>Статистика</title>
-</head>
-<body>
+{% endblock %}
+{% block content %}
     <h1>Пользователь:{{ user.username }}</h1>
     <h1>Дата регистрации:{{ date_reg }}</h1>
     <h1>Текущая сессия на сайте:{{ time_online_hour }}</h1>
     <hr>
     <h2>Количество пройденных голосований: {{ count_of_votes }}</h2>
-    {% for item in data %}
-        <h1>Тема голосования:{{ item.vote.theme }}</h1>
+    {% for user_vote in user_votes %}
+        <h1>Тема голосования:{{ user_vote.vote.theme }}</h1>
         <h5>Ваши ответы</h5>
-            {% for i in item.results %}
+            {% for i in user_vote.results %}
                 {% if i == ';' %}
                 <br>
                 <br>
@@ -22,5 +22,4 @@
                 {% endif %}
             {% endfor %}
     {% endfor %}
-</body>
-</html>
+{% endblock %}
