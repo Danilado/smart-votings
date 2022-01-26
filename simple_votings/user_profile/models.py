@@ -11,9 +11,9 @@ class Vote(BaseModel):  # голосование
 
 
 class UserVote(BaseModel): # голос пользователя
-    vote=models.ForeignKey(to=Vote, on_delete=models.CASCADE)
+    vote_id = models.TextField()
     results = models.TextField()
-    user = models.ForeignKey(to=get_user_model(), on_delete=models.CASCADE)
+    user_id = models.TextField()
 
 
 class Report(BaseModel):

@@ -35,7 +35,16 @@ def user_friendly_vote_list(request: HttpRequest):
 def vote_n_goback(request: HttpRequest):     # Gospodin: Я ваш родственник
     id = request.GET.get('id')
     var = request.GET.get('choise')
-    print(f'userid: {request.user.id} id: {id} choise: {var}')
+    count_od_users = 0
+    user_id = request.user.id
+    #print(f'userid: {user_id} id: {id} choise: {var}')
+    for i in UserVote.objects.all():
+        if str(i.vote_id) == str(id) and str(i.user_id) == str(user_id):
+            count_od_users = 1
+    if count_od_users == 0:
+        record = UserVote(vote_id=id, results=var, user_id=request.user.id)
+        record.save()
+
     return render(request, 'goback.html')
 
 
@@ -94,7 +103,7 @@ def add_new_vote(request: HttpRequest):  # new voting
         theme = form.data["theme"]
         description = form.data["description"]
         answers = form.data["answers"]
-        record = Vote(theme=theme, description=description, answers=answers)
+        record = Vote(theme=theme, description=description, answers=answers, users='')
         record.save()
     context['form'] = form
     return render(request, "add.html", context)
