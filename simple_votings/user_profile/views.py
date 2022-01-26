@@ -22,7 +22,13 @@ def post_or_none(request: HttpRequest):
 @permission_required("auth.view_user")
 @login_required
 def get_user_profile_page(request: HttpRequest):
-    context = {"is_moderator": is_moderator(request.user)}
+    context = {
+        'name': request.user.username,
+        'date_joined': str(request.user.date_joined),
+        'last_login': str(request.user.last_login),
+        "is_moderator": is_moderator(request.user)
+    }
+    print(request.user)
     return render(request, "accounts/profile.html", context)
 
 
