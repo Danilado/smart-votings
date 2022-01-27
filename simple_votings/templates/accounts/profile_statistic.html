@@ -10,12 +10,6 @@
     <h1>Текущая сессия на сайте:{{ time_online_hour }}</h1>
     <hr>
     <h2>Количество пройденных голосований: {{ count_of_votes }}</h2>
-<<<<<<< HEAD
-    {% for i, k in ans_word.items %}
-        <h1>Тема голосования:{{ i.theme }}</h1>
-        <h5>Ваш ответ</h5>
-        {{ k }}
-=======
     {% for user_vote in user_votes %}
         <h1>Тема голосования:{{ user_vote.vote.theme }}</h1>
         <h5>Ваши ответы</h5>
@@ -27,6 +21,5 @@
                 {{ i }}
                 {% endif %}
             {% endfor %}
->>>>>>> develop
     {% endfor %}
 {% endblock %}
