@@ -5,7 +5,7 @@ from typing import TYPE_CHECKING
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.decorators import permission_required
 from django.contrib.auth.models import AbstractUser
-from django.http import HttpRequest, HttpResponse
+from django.http import HttpRequest, HttpResponse, HttpResponseRedirect
 from django.shortcuts import render
 
 from user_profile.forms import AddVoteForm
@@ -14,7 +14,7 @@ from user_profile.models import UserVote
 from user_profile.models import Vote
 from user_profile.views import is_moderator
 import simple_votings.choice as choice
-
+from django.urls import reverse
 
 def super_voleyball(request: HttpRequest):  
     return render(request, 'index/index.html')
@@ -44,7 +44,7 @@ def vote_n_goback(request: HttpRequest):     # Gospodin: Я ваш родств�
         record = UserVote(vote_id=id, results=var, user_id=request.user.id)
         record.save()
 
-    return render(request, 'goback.html')
+    return HttpResponseRedirect(reverse("vote_list"))
 
 
 @permission_required("user_profile.add_uservote")

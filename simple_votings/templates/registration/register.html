@@ -1,11 +1,14 @@
-{% extends "../base.html" %}
-{% load static %}
+{% extends "../base.html" %} {% load static %}
 
+<!-- -->
+{% block header %} РЕГИСТРАЦИЯ {% endblock %}
+<!--  -->
 
 {% block head %}
-  <link rel="stylesheet" href="{% static 'register/style.css' %}" />
-  <title>Регистрация</title>
+<link rel="stylesheet" href="{% static 'register/style.css' %}" />
+<title>Регистрация</title>
 {% endblock %}
+<!--  -->
 {% block content %}
 <section class="regCont">
   <h1>Регистрация</h1>

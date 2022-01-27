@@ -1,21 +1,23 @@
-{% extends "../base.html" %}
-
+{% extends "../base.html" %} {% load static %}
+<!-- -->
+{% block header %} ПРОФИЛЬ {% endblock %}
+<!--  -->
 {% block content %}
 <span><a href="{% url 'logout' %}">Выйти</a> | </span>
 <span><a href="{% url 'change_user' %}">Поменять профиль</a> | </span>
-<span><a href="{% url 'list_votings' %}">Список голосований</a> | </span>
+<span><a href="{% url 'vote_list' %}">Список голосований</a> | </span>
 <span><a href="{% url 'add_vote' %}">Создать новое голосование</a> | </span>
 {% if is_moderator %}
-    <span><a href="{% url 'report_list' %}">Репорты голосований</a> | </span>
+<span><a href="{% url 'report_list' %}">Репорты голосований</a> | </span>
 {% endif %}
 <a href="{% url 'profile_statistic' %}">Статистика</a>
 
-<hr>
+<hr />
 
 <span>Имя: {{name}}</span>
-<br>
+<br />
 <span>Дата регистрации: {{date_joined}}</span>
-<br>
+<br />
 <span>Дата последнего входа: {{last_login}}</span>
 
 {% endblock %}

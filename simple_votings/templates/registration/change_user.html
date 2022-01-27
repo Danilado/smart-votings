@@ -1,41 +1,38 @@
 {% extends "../base.html" %} {% load static %}
-
+<!--  -->
 {% block head %}
 <title>Изменить пользователя</title>
+<link rel="stylesheet" href="{% static 'g/&form/style.css' %}">
 {% endblock %}
-
-{% block content %}
-{% if form.errors %}
-    <p class="error">
-    Ошибки:
-    </p>
-    {% for error in form.errors %}
-    <p class="error">
-    {{ error }}
-    </p>
-    {% endfor %}
-{% endif %}
-
+<!-- -->
+{% block header %} ИЗМЕНИТЬ АККАУНТ {% endblock %}
+<!--  -->
+{% block content %} {% if form.errors %}
+<p class="error"> Ошибки: </p>
+{% for error in form.errors %}
+<p class="error"> {{ error }} </p>
+{% endfor %} {% endif %}
+<section class="pageCont"> 
 <form method="post" action="#">
-    {% csrf_token %}
-    <table>
-        <tr>
-            <td>Имя пользователя</td>
-            <td>{{ form.username }}</td>
-        </tr>
+  {% csrf_token %}
+  <table>
+    <tr>
+      <td>Имя пользователя</td>
+      <td>{{ form.username }}</td>
+    </tr>
 
-        <tr>
-            <td>Пароль</td>
-            <td>{{ form.password }}</td>
-        </tr>
-        <tr>
-            <td>Почта</td>
-            <td>{{ form.email }}</td>
-        </tr>
-    </table>
-
-    <input type="submit" value="Поменять данные" class="bt" />
-    <input type="hidden" name="next" value="{{ next }}" />
+    <tr>
+      <td>Пароль</td>
+      <td>{{ form.password }}</td>
+    </tr>
+    <tr>
+      <td>Почта</td>
+      <td>{{ form.email }}</td>
+    </tr>
+  </table>
+  <input type="submit" value="Поменять данные" class="bt" />
+  <input type="hidden" name="next" value="{{ next }}" />
+</section>
 </form>
 
 {% endblock %}

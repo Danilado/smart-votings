@@ -1,61 +1,54 @@
-{% extends "../base.html" %}
-{% load static %}
-
-<!-- 
-Я оставил мета теги, потому что так страница выглядит
-гораздо более цельной в редакторе файлов. Чисто фактически,
-можно оставть только то, что заключено в блоки
-
-quswadress: Я так не думаю. И спасибо за то что поставил блоки
--->
-
+{% extends "../base.html" %} {% load static %}
+<!-- -->
+{% block header %} ВХОД {% endblock %}
+<!--  -->
 
 {% block head %}
-  <link rel="stylesheet" href="{% static 'login/style.css' %}" />
-  <title>Авторизация</title>
+<link rel="stylesheet" href="{% static 'login/style.css' %}" />
+<title>Авторизация</title>
 {% endblock head %}
-
+<!--  -->
 {% block content %}
-  <section class="logCont">
-    <h3>Авторизация</h3>
+<section class="logCont">
+  <h3>Авторизация</h3>
 
-    {% if form.errors %}
-    <p class="error">
-      Имя пользователя или пароль введены неверно. Попробуйте снова
-    </p>
-    {% endif %} {% if next %} {% if user.is_authenticated %}
-    <p class="error">
-      У вашего аккаунта нет доступа к этой странице. Пожалуйста, войдите в
-      аккаунт с надлежащими правами.
-    </p>
-    {% else %}
-    <p class="error">
-      Пожалуйста, войдите чтобы увидеть содержимое этой страницы.
-    </p>
-    {% endif %} {% endif %}
+  {% if form.errors %}
+  <p class="error">
+    Имя пользователя или пароль введены неверно. Попробуйте снова
+  </p>
+  {% endif %} {% if next %} {% if user.is_authenticated %}
+  <p class="error">
+    У вашего аккаунта нет доступа к этой странице. Пожалуйста, войдите в аккаунт
+    с надлежащими правами.
+  </p>
+  {% else %}
+  <p class="error">
+    Пожалуйста, войдите чтобы увидеть содержимое этой страницы.
+  </p>
+  {% endif %} {% endif %}
 
-    <form method="post" action="{% url 'login' %}">
-      {% csrf_token %}
-      <table>
-        <tr>
-          <td>Имя пользователя</td>
-          <td>{{ form.username }}</td>
-        </tr>
+  <form method="post" action="{% url 'login' %}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>Имя пользователя</td>
+        <td>{{ form.username }}</td>
+      </tr>
 
-        <tr>
-          <td>Пароль</td>
-          <td>{{ form.password }}</td>
-        </tr>
-      </table>
+      <tr>
+        <td>Пароль</td>
+        <td>{{ form.password }}</td>
+      </tr>
+    </table>
 
-      <input type="submit" value="Войти" class="bt" />
-      <input type="hidden" name="next" value="{{ next }}" />
-    </form>
+    <input type="submit" value="Войти" class="bt" />
+    <input type="hidden" name="next" value="{{ next }}" />
+  </form>
 
-    <p><a href="{% url 'register_user' %}">Ещё не с нами?</a></p>
-    <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
-  </section>
-  <script src="{% static 'modules/anime.js' %}"></script>
-  <script src="{% static 'modules/triggers.js' %}"></script>
-  <script src="{% static 'login/main.js' %}"></script>
+  <p><a href="{% url 'register_user' %}">Ещё не с нами?</a></p>
+  <p><a href="{% url 'password_reset' %}">Забыли пароль?</a></p>
+</section>
+<script src="{% static 'modules/anime.js' %}"></script>
+<script src="{% static 'modules/triggers.js' %}"></script>
+<script src="{% static 'login/main.js' %}"></script>
 {% endblock %}

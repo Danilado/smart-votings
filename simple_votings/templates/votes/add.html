@@ -1,40 +1,43 @@
-{% extends "base.html" %}
-{% load static %}
-
+{% extends "base.html" %} {% load static %}
+<!-- -->
+{% block header %} СОЗДАТЬ ГОЛОСОВАНИЕ {% endblock %}
+<!--  -->
 {% block head %}
-    <title>Создать новое голосование</title>
-    <link rel="stylesheet" href="{% static 'base/style.css' %}" />
+<title>Создать новое голосование</title>
+<link rel="stylesheet" href="{% static 'g/&form/style.css' %}" />
 {% endblock %}
+<!--  -->
 {% block content %}
-    <form action="{% url 'add_vote' %}" method="POST">
-      {% csrf_token %}
-      <h3>Создать новое голосование</h3>
-      <table>
-        <tr>
-          <td>Заголовок голосования</td>
-          <td>{{ form.theme }}</td>
-        </tr>
-        <tr>
-          <td>Описание голосования</td>
-          <td>{{ form.description }}</td>
-        </tr>
-        <tr>
-          <td>
-            Варианты ответа
-            <span
-              style="
-                color: rgba(255, 255, 255, 0.25);
-                font-size: 0.8em;
-                margin: 0;
-              "
-              ><br />
-              разделённые символом ;
-            </span>
-          </td>
-          <td>{{ form.answers }}</td>
-        </tr>
-      </table>
-      <input type="submit" value="Создать" class="bt" />
-    </form>
-    <script src="{% static 'addPole/main.js' %}"></script>
+<section class="pageCont">
+  <form action="{% url 'add_vote' %}" method="POST">
+    {% csrf_token %}
+    <h3>Создать новое голосование</h3>
+    <table>
+      <tr>
+        <td>Заголовок голосования</td>
+        <td>{{ form.theme }}</td>
+      </tr>
+      <tr>
+        <td>Описание голосования</td>
+        <td>{{ form.description }}</td>
+      </tr>
+      <tr>
+        <td>
+          Варианты ответа
+          <span
+            style="
+              color: rgba(255, 255, 255, 0.25);
+              font-size: 0.8em;
+              margin: 0;
+            "
+            ><br />
+            разделённые символом ;
+          </span>
+        </td>
+        <td>{{ form.answers }}</td>
+      </tr>
+    </table>
+    <input type="submit" value="Создать" class="bt" /> </form
+></section>
+<script src="{% static 'addPole/main.js' %}"></script>
 {% endblock %}

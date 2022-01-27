@@ -1,10 +1,13 @@
-{% extends "base.html" %}
 {% load static %}
-
-{% block head %}
-    <title>да...</title>
-{% endblock %}
-{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Smart Votings</title>
+  </head>
+  <body>
     <div class="f1"></div>
     <div class="f2"></div>
     <style>
@@ -16,13 +19,13 @@
         margin: 0;
         animation: bg 40s linear infinite;
         background-repeat: repeat;
-        background-image: url({% static 'img/seamlessahegao.png' %});
+        background-image: url("{% static 'img/seamlessahegao.png' %}");
       }
       @keyframes bg {
         0% {
           background-position: 0;
         }
-        100%{
+        100% {
           background-position: -1920px;
         }
       }
@@ -30,37 +33,38 @@
         0% {
           background-color: rgba(128, 0, 128, 0.01);
         }
-        14%{
+        14% {
           background-color: rgba(255, 0, 255, 0.01);
         }
-        28%{
+        28% {
           background-color: rgba(0, 0, 255, 0.01);
         }
-        42%{
+        42% {
           background-color: rgba(0, 255, 255, 0.01);
         }
-        56%{
+        56% {
           background-color: rgba(255, 165, 0, 0.01);
         }
-        70%{
+        70% {
           background-color: rgba(255, 140, 0, 0.01);
         }
-        84%{
+        84% {
           background-color: rgba(139, 0, 0, 0.01);
         }
-        100%{
+        100% {
           background-position: rgba(255, 0, 0, 0.01);
         }
       }
-      .f1, .f2{
+      .f1,
+      .f2 {
         position: fixed;
         height: 100%;
         width: 100%;
       }
-      .f1{
+      .f1 {
         background: rgba(0, 0, 0, 0.97);
       }
-      .f2{
+      .f2 {
         animation: rain 40s infinite linear;
       }
       html {
@@ -95,7 +99,7 @@
           height: ${this.size}em;
           `;
           this.node.innerHTML =
-            insults[Math.floor(Math.random() * insults.length)];
+          insults[Math.floor(Math.random() * insults.length)];
           this.speed = Math.floor(Math.random() * 2) + this.size * 2;
           b.appendChild(this.node);
           this.target = this.node.getBoundingClientRect().width * -1;
@@ -126,4 +130,5 @@
       }
       upd();
     </script>
-{% endblock %}
+  </body>
+</html>
