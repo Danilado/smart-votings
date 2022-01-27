@@ -13,6 +13,7 @@ from user_profile.forms import DescForm
 from user_profile.models import UserVote
 from user_profile.models import Vote
 from user_profile.views import is_moderator
+import simple_votings.choice as choice
 
 
 def super_voleyball(request: HttpRequest):  
@@ -30,23 +31,55 @@ def user_friendly_vote_list(request: HttpRequest):
     
 
 @permission_required("user_profile.add_uservote")
+def vote_n_goback(request: HttpRequest):     # Gospodin: Я ваш родственник
+    id = request.GET.get('id')
+    var = request.GET.get('choise')
+    count_od_users = 0
+    user_id = request.user.id
+    #print(f'userid: {user_id} id: {id} choise: {var}')
+    for i in UserVote.objects.all():
+        if str(i.vote_id) == str(id) and str(i.user_id) == str(user_id):
+            count_od_users = 1
+    if count_od_users == 0:
+        record = UserVote(vote_id=id, results=var, user_id=request.user.id)
+        record.save()
+
+    return render(request, 'goback.html')
+
+
+@permission_required("user_profile.add_uservote")
 def description_vote(request: HttpRequest):  # votings description
     context = {}
-    description = "None"
-    answer1 = "YES"
-    answer2 = "NO"
-    user_id = 2
+    id = int(request.GET.get('id'))
+    all_data = Vote.objects.all()
+    choice.choises = []
+    v = []
+    for item in all_data:
+        if item.id == id:
+            v = item
+            count = 0
+            for i in item.answers.split(";"):
+                choice.choises.append((count, i))
+                count += 1
+            description = item.description
+    print(choice.choises, end="\nend\n")
+    form = DescForm(request.POST if request.method == "POST" else None)
+    print(form.CHOICES)
+    form.CHOICES = choice.choises
+    print(form.CHOICES)
+    form.CHOICES = [(0, '123'), (1, '321')]
     form = DescForm(request.POST if request.method == "POST" else None)
     if request.method == "POST":
+        print(choice.choises)
+        print("qwe")
         result = form.data["choice_field"]
-        record = UserVote(description=description, answer1=answer1, answer2=answer2, result=result)
+        record = UserVote(results=result)
         record.save()
         context['form'] = form
-
+    context['data'] = all_data
+    context['id'] = id
     user_votes = UserVote.objects.all()
-
     context['user_votes'] = user_votes
-    context['id'] = user_id
     context['form'] = form
 
     return render(request, "votes/description_vote.html", context)
@@ -84,10 +117,15 @@ def profile_statistic(request: HttpRequest):
     time_online = datetime.datetime.now().replace(tzinfo=None) - current_user.last_login.replace(tzinfo=None)
     context['time_online_hour'] = time_online
     context['date_reg'] = current_user.date_joined
-    user_votes = UserVote.objects.filter(user=current_user)
-    count_of_votes = user_votes.count()
+    data = UserVote.objects.filter(user=current_user)
+    count_of_votes = data.count()
     context['count_of_votes'] = count_of_votes
-    context['user_votes'] = user_votes
+    context['data'] = data
+    ans_word = {}
+    for item in data:
+        ans_word.update({item.vote : item.vote.answers.split(";")[int(item.results) - 1]})
+    context['ans_word'] = ans_word
+    context['user_votes'] = data
 
     return render(request, "accounts/profile_statistic.html", context)
 
@@ -95,21 +133,24 @@ def profile_statistic(request: HttpRequest):
 @login_required
 def vote_result(request: HttpRequest):
     context = {}
-    user_votes = UserVote.objects.filter(vote=99)
-    print(user_votes)
-    context['vote'] = user_votes[0].vote
-    answers = {answer: 0 for answer in user_votes[0].vote.answers.split(";")}
+    data = UserVote.objects.filter(vote=1)
+    context['vote'] = data[0].vote
+    answers = {}
+
+    for item in data[0].vote.answers.split(";"):
+        answers.update({item: 0})
 
     users_count = 0
 
-    for item in user_votes:
-        results = item.results.split(";")
-        for result in results:
-            users_count += 1
-            answers.update({result: answers.get(result, 0) + 1})
+    for item in data:
+        results = item.results
+        users_count += 1
+        if answers.get(results) is None:
+            answers.update({item.vote.answers.split(";")[int(results) - 1]: 1})
+        else:
+            answers.update({item.vote.answers.split(";")[int(results) - 1]: answers.get(results) + 1})
 
     for k, result in answers.items():
         answers.update({k: answers.get(k) / users_count * 100})
-
     context['answers'] = answers
     return render(request, "votes/result.html", context)

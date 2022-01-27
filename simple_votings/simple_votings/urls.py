@@ -12,6 +12,10 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("api/get_vote_list", vote_list, name="vote_list_api"),
     path("auth/", include('user_profile.urls')),  # login page
+    path("accounts/profile", get_user_profile_page),  # profile page
+    path("get_vote_list/", vote_list),
+    path("vote/submit", vote_n_goback),
+    path("accounts/profile/statistic", profile_statistic),
     path("vote/add", add_new_vote, name="add_vote"),  # new vote page
     path("vote/delete", delete_vote, name="delete_vote"),
     path("vote/description", description_vote, name="description"),

@@ -4,15 +4,15 @@ from django import forms
 from django.contrib.auth import get_user_model
 from django.contrib.auth.forms import UsernameField
 from django.forms import EmailInput, TextInput, PasswordInput
-
+from django.http import QueryDict
+import simple_votings.choice as choice
 
 class DescForm(forms.Form):
-    CHOICES = [
-        ('1', 'YES'), ('2', 'NO')
-    ]
+    CHOICES = choice.choises
     # Vlastelin a.k.a kotuk: тот кто теперь должен делать подсчет, в бд хранится номер варианта ответа yes - 1, no - 2
     # gospodin: но почему не 0 и 1 ?
     choice_field = forms.ChoiceField(widget=forms.RadioSelect, choices=CHOICES)
+
 
 
 class AddVoteForm(forms.Form):  # add new vote
