@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+
+{% block head %}
+    <title>description_vote</title>
+{% endblock %}
+{% block content %}
+<body>
+    <hr>
+    <hr>
+    {% for vote in votes %}
+        <h1>Тема голосования:{{ vote.theme }}</h1>
+        <hr>
+        <h3>Описание:{{ vote.description }}</h3>
+        <hr>
+        <form action="{% url 'description' %}" method="post">
+            {% csrf_token %}
+            <h5>Варианты ответов</h5>
+            {% for i in vote.answers %}
+                {% if i == ';' %}
+                <br>
+                <br>
+                {% else %}
+                {{ i }}
+                {% endif %}
+            {% endfor %}
+        </form>
+        <hr>
+        <form action="{% url 'change_vote' %}" method="get">
+            <input type="hidden" name="old_theme" value="{{ vote.theme }}">
+            <input type="submit" value="Изменить">
+        </form>
+        <form action="{% url 'create_report' %}" method="get">
+            <input type="hidden" name="id" value="{{ vote.id }}">
+            <input type="submit" value="Пожаловаться">
+        </form>
+        {% if is_moderator %}
+        <form action="{% url 'delete_vote' %}" method="post">
+            {% csrf_token %}
+            <input type="hidden" name="id" value="{{ vote.id }}">
+            <input type="submit" value="Удалить">
+        </form>
+        {% endif %}
+        <hr>
+    {% endfor %}
+{% endblock %}

@@ -1,13 +1,12 @@
+{% extends "base.html" %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="ru">
-  <head>
-    <meta charset="UTF-8" />
+
+{% block head %}
     <title>Создать новое голосование</title>
     <link rel="stylesheet" href="{% static 'base/style.css' %}" />
-  </head>
-  <body>
-    <form action="/add/" method="POST">
+{% endblock %}
+{% block content %}
+    <form action="{% url 'add_vote' %}" method="POST">
       {% csrf_token %}
       <h3>Создать новое голосование</h3>
       <table>
@@ -38,5 +37,4 @@
       <input type="submit" value="Создать" class="bt" />
     </form>
     <script src="{% static 'addPole/main.js' %}"></script>
-  </body>
-</html>
+{% endblock %}
