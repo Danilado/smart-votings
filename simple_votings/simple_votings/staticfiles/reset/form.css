@@ -11,10 +11,10 @@ html {
   color: #fff;
 }
 
-body {
+.body {
   overflow: hidden;
   font-size: 1.2em;
-  background: #222;
+  background: #111;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -31,7 +31,7 @@ body {
   min-height: 100vh;
 }
 
-body form {
+.body form {
   background: rgba(255, 255, 255, 0.05);
   padding: 40px 20px;
   display: block;
@@ -56,7 +56,7 @@ body form {
   border-radius: 10px;
 }
 
-body form section {
+.body form section {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -66,7 +66,7 @@ body form section {
           flex-direction: column;
 }
 
-body form input {
+.body form input {
   min-width: 200px;
   width: 12vw;
   padding: 10px 15px;

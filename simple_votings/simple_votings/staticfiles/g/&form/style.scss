@@ -1,27 +1,7 @@
-@import url("https://fonts.googleapis.com/css2?family=Roboto&display=swap");
-
-@keyframes redpulse {
-  0% {
-    color: #fff;
-  }
-  50% {
-    color: #f00;
-  }
-  100% {
-    color: #fff;
-  }
-}
-
 html {
-  scroll-behavior: smooth;
   overflow: hidden;
 }
-* {
-  margin: 0;
-  padding: 0;
-  font-family: "Roboto", sans-serif;
-  color: #fff;
-}
+
 .body {
   background: #111;
   display: flex;
@@ -34,7 +14,7 @@ html {
     top: 10vh;
     animation: redpulse 1s linear 3;
   }
-  .logCont {
+  .pageCont {
     border: 0px solid #000;
     border-radius: 10px;
     width: 30vw;
@@ -60,8 +40,6 @@ html {
         padding: 10px;
         font-size: 1.3em;
         &.bt {
-          color: #333;
-          pointer-events: none;
           transition: 0.3s;
         }
       }

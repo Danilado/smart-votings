@@ -11,7 +11,7 @@ html {
   color: #fff;
 }
 
-body {
+.body {
   background: #111;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -26,7 +26,7 @@ body {
   overflow: hidden;
 }
 
-body .regCont {
+.body .regCont {
   border: 0px solid #000;
   border-radius: 10px;
   width: 30vw;
@@ -48,11 +48,11 @@ body .regCont {
           flex-direction: column;
 }
 
-body .regCont * {
+.body .regCont * {
   margin: 5px 0;
 }
 
-body .regCont form {
+.body .regCont form {
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
@@ -65,7 +65,7 @@ body .regCont form {
           flex-direction: column;
 }
 
-body .regCont form input {
+.body .regCont form input {
   background: rgba(0, 0, 0, 0.2);
   border: none;
   margin: 0 0 20px 0;
@@ -73,14 +73,14 @@ body .regCont form input {
   font-size: 1.3em;
 }
 
-body .regCont form input.bt {
+.body .regCont form input.bt {
   color: #333;
   pointer-events: none;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-body .regCont form table {
+.body .regCont form table {
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
@@ -93,7 +93,7 @@ body .regCont form table {
           flex-direction: column;
 }
 
-body .regCont form table tbody {
+.body .regCont form table tbody {
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
@@ -111,7 +111,7 @@ body .regCont form table tbody {
           align-items: center;
 }
 
-body .regCont form table tbody tr {
+.body .regCont form table tbody tr {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -124,11 +124,11 @@ body .regCont form table tbody tr {
           justify-content: center;
 }
 
-body .regCont form table tbody tr td {
+.body .regCont form table tbody tr td {
   margin: 0;
 }
 
-body .regCont form table tbody tr label {
+.body .regCont form table tbody tr label {
   font-size: 1.1em;
 }
 /*# sourceMappingURL=style.css.map */

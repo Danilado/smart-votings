@@ -34,7 +34,7 @@ html {
   color: #fff;
 }
 
-body {
+.body {
   background: #111;
   display: -webkit-box;
   display: -ms-flexbox;
@@ -49,14 +49,14 @@ body {
   overflow: hidden;
 }
 
-body .error {
+.body .error {
   position: absolute;
   top: 10vh;
   -webkit-animation: redpulse 1s linear 3;
           animation: redpulse 1s linear 3;
 }
 
-body .logCont {
+.body .logCont {
   border: 0px solid #000;
   border-radius: 10px;
   width: 30vw;
@@ -78,11 +78,11 @@ body .logCont {
           flex-direction: column;
 }
 
-body .logCont * {
+.body .logCont * {
   margin: 5px 0;
 }
 
-body .logCont form {
+.body .logCont form {
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
@@ -95,7 +95,7 @@ body .logCont form {
           flex-direction: column;
 }
 
-body .logCont form input {
+.body .logCont form input {
   background: rgba(0, 0, 0, 0.2);
   border: none;
   margin: 0 0 20px 0;
@@ -103,14 +103,14 @@ body .logCont form input {
   font-size: 1.3em;
 }
 
-body .logCont form input.bt {
+.body .logCont form input.bt {
   color: #333;
   pointer-events: none;
   -webkit-transition: 0.3s;
   transition: 0.3s;
 }
 
-body .logCont form table {
+.body .logCont form table {
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
@@ -123,7 +123,7 @@ body .logCont form table {
           flex-direction: column;
 }
 
-body .logCont form table tbody {
+.body .logCont form table tbody {
   -webkit-box-flex: 3;
       -ms-flex: 3;
           flex: 3;
@@ -141,7 +141,7 @@ body .logCont form table tbody {
           align-items: center;
 }
 
-body .logCont form table tbody tr {
+.body .logCont form table tbody tr {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -154,11 +154,11 @@ body .logCont form table tbody tr {
           justify-content: center;
 }
 
-body .logCont form table tbody tr td {
+.body .logCont form table tbody tr td {
   margin: 0;
 }
 
-body .logCont form table tbody tr label {
+.body .logCont form table tbody tr label {
   font-size: 1.1em;
 }
 /*# sourceMappingURL=style.css.map */

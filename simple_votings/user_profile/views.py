@@ -86,7 +86,7 @@ def change_vote(request: HttpRequest):
             vote.description = context['form'].cleaned_data.get('description')
             vote.answers = context['form'].cleaned_data.get('answers')
             vote.save()
-            return HttpResponseRedirect(reverse("list_votings"))
+            return HttpResponseRedirect(reverse("vote_list"))
     return render(request, "votes/edit.html", context)
 
 
@@ -106,7 +106,7 @@ def create_report(request: HttpRequest):
                         content=context['form'].cleaned_data['content'],
                         vote=context['vote'])
         report.save()
-        return HttpResponseRedirect(reverse("list_votings"))
+        return HttpResponseRedirect(reverse("vote_list"))
     return render(request, "votes/report/create.html", context)
 
 
@@ -125,7 +125,7 @@ def delete_vote(request: HttpRequest):
     if not valid_request:
         return HttpResponseBadRequest()
     vote.delete()
-    return HttpResponseRedirect(reverse("list_votings"))
+    return HttpResponseRedirect(reverse("vote_list"))
 
 
 @permission_required("user_profile.delete_report")
