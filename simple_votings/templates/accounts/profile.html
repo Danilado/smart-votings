@@ -1,13 +1,21 @@
 {% extends "../base.html" %}
 
 {% block content %}
-<p>Здесь должен быть макет профиля</p>
-<a href="{% url 'logout' %}">Выйти</a>
-<a href="{% url 'change_user' %}">Поменять профиль</a>
-<a href="{% url 'profile_statistic' %}">Статистика</a>
-<a href="{% url 'list_votings' %}">Список голосований</a>
-<a href="{% url 'add_vote' %}">Создать новое голосование</a>
+<span><a href="{% url 'logout' %}">Выйти</a> | </span>
+<span><a href="{% url 'change_user' %}">Поменять профиль</a> | </span>
+<span><a href="{% url 'list_votings' %}">Список голосований</a> | </span>
+<span><a href="{% url 'add_vote' %}">Создать новое голосование</a> | </span>
 {% if is_moderator %}
-    <a href="{% url 'report_list' %}">Репорты голосований</a>
+    <span><a href="{% url 'report_list' %}">Репорты голосований</a> | </span>
 {% endif %}
+<a href="{% url 'profile_statistic' %}">Статистика</a>
+
+<hr>
+
+<span>Имя: {{name}}</span>
+<br>
+<span>Дата регистрации: {{date_joined}}</span>
+<br>
+<span>Дата последнего входа: {{last_login}}</span>
+
 {% endblock %}
