@@ -103,6 +103,7 @@ def add_new_vote(request: HttpRequest):  # new voting
         answers = form.cleaned_data["answers"]
         record = Vote(theme=theme, description=description, answers=answers)
         record.save()
+        return user_friendly_vote_list(request)
     context['form'] = form
     return render(request, "votes/add.html", context)
 
