@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% load static %}
+<!-- -->
+{% block header %} РЕЗУЛЬТАТЫ ГОЛОСОВАНИЯ {% endblock %}
+<!--  -->
+{% block head %}
+<title>Результаты</title>
+{% endblock %}
+<!--  -->
+{% block content %}
+<h1>Тема голосования:{{ vote.theme }}</h1>
+<hr />
+<h3>Описание:{{ vote.description }}</h3>
+<hr />
+{% csrf_token %}
+<h5>Результаты</h5>
+{% for i, k in answers.items %} {{ i }} - {{ k }}%
+<br />
+{% endfor %}
+<hr />
+<hr />
+{% endblock %}

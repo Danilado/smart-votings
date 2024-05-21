@@ -1,0 +1,17 @@
+{% extends "base.html" %} {% load static %} {% block head %}
+<title>Список голосований</title>
+<link rel="stylesheet" href="{% static 'polllist/style.css' %}" />
+{% endblock %}
+<!-- -->
+{% block header %} СПИСОК ГОЛОСОВАНИЙ {% endblock %}
+<!--  -->
+{% block content %}
+<!-- Окей, меню это хорошо, но я уже устал делать эту фигню, поэтому я, наверное, не
+    буду оптимизировать её под смартфоны -->
+<section class="content">
+  <div class="loading">Загружаю.</div>
+</section>
+<script src="{% static 'modules/anime.js' %}"></script>
+<script src="{% static 'modules/triggers.js' %}"></script>
+<script src="{% static 'polllist/main.js' %}"></script>
+{% endblock %}

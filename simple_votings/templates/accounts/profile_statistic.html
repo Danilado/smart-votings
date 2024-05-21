@@ -1,0 +1,21 @@
+{% extends "base.html" %} {% load static %}
+<!--  -->
+{% block head %}
+<title>Статистика</title>
+{% endblock %}
+<!-- -->
+{% block header %} СТАТИСТИКА {% endblock %}
+<!--  -->
+{% block content %}
+<h1>Пользователь:{{ user.username }}</h1>
+<h1>Дата регистрации:{{ date_reg }}</h1>
+<h1>Текущая сессия на сайте:{{ time_online_hour }}</h1>
+<hr />
+<h2>Количество пройденных голосований: {{ count_of_votes }}</h2>
+{% for i, k in ans_word.items %}
+    <h1>Тема голосования:{{ i.theme }}</h1>
+    <h5>Ваш ответ</h5>
+    {{ k }}
+<br />
+<br />
+{% endfor %} {% endblock %}

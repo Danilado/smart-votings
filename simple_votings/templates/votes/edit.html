@@ -1,0 +1,49 @@
+{% extends "base.html" %} {% load static %}
+<!-- -->
+{% block header %} РЕДАКТИРОВАТЬ ГОЛОСОВАНИЕ {% endblock %}
+<!--  -->
+{% block head %}
+<title>Редактирование голосования {{ old_theme }}</title>
+<link rel="stylesheet" href="{% static 'g/&form/style.css' %}" />
+{% endblock %}
+<!--  -->
+{% block content %}
+<!--  -->
+{% if form.errors and form %}
+<!--  -->
+{% for field in form %} {% for error in field.errors %}
+<p>{{ error|escape }}</p>
+{% endfor %} {% endfor %} {% endif %}
+<section class="pageCont">
+  <form action="#" method="post">
+    <table>
+      {% csrf_token %}
+      <input type="hidden" name="old_theme" value="{{ old_theme }}" />
+      <tr>
+        <td>Название</td>
+        <td>{{ form.theme }}</td>
+      </tr>
+      <tr>
+        <td>Описание</td>
+        <td>{{ form.description }}</td>
+      </tr>
+      <tr>
+        <td>
+          Варианты ответа
+          <span
+            style="
+              color: rgba(255, 255, 255, 0.25);
+              font-size: 0.8em;
+              margin: 0;
+            "
+            ><br />
+            разделённые символом ;
+          </span>
+        </td>
+        <td>{{ form.answers }}</td>
+      </tr>
+    </table>
+    <input type="submit" value="Изменить" />
+  </form>
+</section>
+{% endblock %}

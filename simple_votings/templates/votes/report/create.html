@@ -1,0 +1,28 @@
+{% extends "../../base.html" %} {% load static %}
+
+<!-- -->
+{% block header %} СОЗДАТЬ ЖАЛОБУ {% endblock %} 
+<!-- -->
+  {% block head %}
+  <title>Жалоба на голосование {{ vote.theme }}</title>
+  <link rel="stylesheet" href="{% static 'g/&form/style.css' %}" />
+  {% endblock %} {% block content %}
+  <div class="pageCont">
+  <form action="#" method="post">
+    {% csrf_token %}
+    <input type="hidden" name="id" value="{{ vote.id }}" />
+    <table>
+    <tr>
+      <td>Тема</td>
+      <td>{{ form.theme }}</td>
+    </tr>
+    <tr>
+      <td>Содержание</td>
+      <td>{{ form.content }}</td>
+    </tr>
+  </table>
+    <input type="submit" value="Пожаловаться модератору" />
+  </form>
+  </div>
+  {% endblock %}
+</E>

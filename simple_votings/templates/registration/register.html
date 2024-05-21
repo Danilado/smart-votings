@@ -1,0 +1,43 @@
+{% extends "../base.html" %} {% load static %}
+
+<!-- -->
+{% block header %} РЕГИСТРАЦИЯ {% endblock %}
+<!--  -->
+
+{% block head %}
+<link rel="stylesheet" href="{% static 'register/style.css' %}" />
+<title>Регистрация</title>
+{% endblock %}
+<!--  -->
+{% block content %}
+<section class="regCont">
+  <h1>Регистрация</h1>
+
+  <form method="post" action="{% url 'register_user' %}">
+    {% csrf_token %}
+    <table>
+      <tr>
+        <td>Имя пользователя</td>
+        <td>{{ form.username }}</td>
+      </tr>
+
+      <tr>
+        <td>Пароль</td>
+        <td>{{ form.password }}</td>
+      </tr>
+
+      <tr>
+        <td>Email</td>
+        <td>{{ form.email }}</td>
+      </tr>
+    </table>
+
+    <input type="submit" value="Register" class="bt" />
+  </form>
+
+  <p><a href="{% url 'login' %}">Уже есть аккаунт?</a></p>
+</section>
+<script src="{% static 'modules/anime.js' %}"></script>
+<script src="{% static 'modules/triggers.js' %}"></script>
+<script src="{% static 'register/main.js' %}"></script>
+{% endblock %}
